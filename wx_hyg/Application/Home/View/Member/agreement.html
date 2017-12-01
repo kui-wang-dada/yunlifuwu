@@ -1,0 +1,91 @@
+<include file="header" />
+
+<body>
+<div id="wrap" class="wrap_xieyi">
+    <header class="mint-header is-fixed">
+        <div class="mint-header-button is-left">
+            <a href="#/" class="mui-active">
+                <button class="mint-button mint-button--default mint-button--normal">
+                    <span class="mint-button-icon">
+                        <i class="mintui mintui-back"></i>
+                    </span>
+                    <label class="mint-button-text"></label>
+                </button>
+            </a>
+        </div>
+        <h1 class="mint-header-title">联盛会员合作购协议</h1>
+        <div class="mint-header-button is-right">
+            <button class="mint-button mint-button--default mint-button--normal">
+            </button>
+        </div>
+    </header>
+    <div id="xieyi_focus">
+        <div id="xieyi_header">
+            
+            <ul>
+                <li><span>甲方：</span>联盛商业连锁股份有限公司</li>
+                <li><span>乙方：</span><{$user.p_ref_name}></li>
+            </ul>
+        </div>
+        <div id="xieyi_body">
+            <p>甲方和乙方本着互利互惠、合作共赢的原则，经双方友好协商,达成如下合作协议:</p>
+            <ul>
+                <li>
+                    <h6>第一条 合作内容</h6>
+                    <ul>
+                        <li><p>1.乙方需是甲方会员，办理时需向甲方提供有效身份证，联盛各门店均可办理。</p></li>
+                        <li><p>2.乙方每周需将甲方的微信正面宣传信息向其朋友圈最少推送两条，且发送不得设定朋友圈人群限制。</p></li>
+                        <li><p>3.乙方选择成为甲方的&nbsp;<{$info.name}>&nbsp;会员，甲方一次性赠送乙方&nbsp;<{$info.vouchers}>元电子返利券，乙方承诺在协议期内应消费不低于&nbsp;<{$info.amount}>元金额，同时乙方应支付&nbsp;<{$info.deposit}>元保证金。</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h6>第二条 合作期限</h6>
+                    <empty name="info['start_time']">
+                        <p>本协议要求乙方与甲方签订不少于壹年的合作协议，乙方不可提前终止本协议。双方确认本协议期限从 &nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日至&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日，共计壹年。</p>
+                        <else />
+                        <p>本协议要求乙方与甲方签订不少于壹年的合作协议，乙方不可提前终止本协议。双方确认本协议期限从 <{$info.start_date}>至&nbsp;<{$info.end_date}>日，共计壹年。</p>
+                    </empty>
+                </li>
+                <li>
+                    <h6>第三条 违约责任</h6>
+                    <p>
+                        如果乙方未遵照完成每周推送两条信息，经甲方查实后，需补足有效信息推送方能退保证金（若朋友圈发送设定人群限制则视为无效推送）。如果乙方在协议期未遵照完成既定的消费金额，甲方有权利在保证金内扣除所约定未完成的消费金额，所扣部分最高不能超过赠送返利券金额。</p>
+                </li>
+                <li>
+                    <h6>第四条 其他</h6>
+                    <ul>
+                        <li><p>1. 乙方在签订本协议时需缴纳完毕上述保证金，如乙方未足额缴纳完毕约定的保证金本协议不生效。</p></li>
+                        <li><p>2.
+                            协议期满一年到期后方可无息退还保证金。办理到期保证金的退还门店有：九江联盛广场贵宾厅、九江快乐城贵宾厅、奥特莱斯贵宾厅、瑞昌贵宾厅、修水贵宾厅、湖口店客服台、武宁店客服台、共青店客服台、星子店客服台、永修店客服台、沙河店客服台。</p>
+                        </li>
+                        <li><p>3. 本协议正本一式两份，双方各执一份。 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;（以下无正文）
+                        </p></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="xieyi_footer">
+            <ul>
+                <li><span>甲方（签章）：</span>联盛商业连锁股份有限公司</li>
+                <li><span>签订日期:</span>&nbsp;
+                    <empty name="info.end_time">
+                        &nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日 　　
+                    <else />
+                        <{$info.start_date}>
+                    </empty>
+                </li>
+                <li><span>签订地点：</span>九江市 　</li>
+            </ul>
+            <ul>
+                <li><span>乙方（签字）:</span><{$user.p_ref_name}></li>
+                <li><span>乙方手机号：</span><{$user.p_ref_mobile}></li>
+            </ul>
+        </div>
+    
+    </div>
+</div>
+
+</body>
+<include file="footer" />

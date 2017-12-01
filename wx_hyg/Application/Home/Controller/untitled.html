@@ -1,0 +1,588 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+vendor('Wxpay.wxpay');
+class IndexController extends Controller {
+
+
+	/**
+	 * 登录接口
+	 * @param posid pos机id
+	 * @param userid 用户名
+	 * @param password 密码
+	 * @param posinfo pos的一些信息
+	 * @param reqtiem 传入时间
+	 * @return {
+	 *	    "result_code": "0",
+	 *	    "result_des": "登录成功",
+	 *	    "result_data": {
+	 *	        "token": "cs30301313",
+	 *	        "posid": "0001",
+	 *	        "posname": "测试门店1",
+	 *	        "postype": "2",
+	 *	        "storeid": "00379575",
+	 *	        "storename": "测试门店",
+	 *	        "nodeid": "00263305",
+	 *	        "functype": "2",
+	 *	    }
+	 *	}
+	 */
+
+	public function login()
+	{
+		if(IS_POST){
+
+			$data = file_get_contents('php://input', 'r');   //接受post传递过来的json数据
+			$data = json_decode($data,true);
+			if(empty($data)){
+
+				exit(self::returnmsg(ErrorCode::$data_error,'数据不合法'));
+			}
+			
+			$diftime = abs(NOW_TIME - $data['reqtime']);
+			//if($diftime>10){
+				//exit(self::returnmsg(ErrorCode::$request_timeout,'请求超时'));
+			//}
+
+			$check_posid = M('pos_posinfo')->field('pos_id,pos_name,pos_type,store_id,pos_name,store_name,node_id,func_type,login_token,login_timeout')->where(array('pos_id'=>$data['pos_id']))->find();
+			if(empty($check_posid)){
+
+				exit(self::returnmsg(ErrorCode::$login_pos_null,'终端不存在'));
+
+			}elseif (empty($check_posid['login_token']) || $check_posid['login_timeout'] < NOW_TIME) {    //登录过期，更新token并重新给值
+
+				$check_posid['login_token'] = self::getToken(); 
+				$up['login_token'] = $check_posid['login_token'];  //登录token
+				$up['login_timeout'] = strtotime("2050-12-31");  //token过期时间
+				$uptoken = M('pos_posinfo')->where(array('pos_id'=>$data['pos_id']))->save($up);
+				if($uptoken !== false){
+
+					exit(self::returnmsg(ErrorCode::$ok,'登录成功,token更新成功',$check_posid));
+				}else{
+					exit(self::returnmsg(ErrorCode::$login_error,'登录失败'));
+				}
+
+			}else{
+
+				exit(self::returnmsg(ErrorCode::$ok,'登录成功',$check_posid));
+			}
+
+		}else{
+            
+            exit(self::returnmsg(ErrorCode::$illegal_request,'非法请求'));
+
+		}
+
+	}
+
+	/**
+	 * 微信刷卡，京东刷卡付款
+	 */
+	public function pay()
+	{
+		if(IS_POST){
+
+			
+		$data = file_get_contents('php://input', 'r');
+    		$this->log("接收到APP支付请求数据：".$data);     //json格式
+    		$data = json_decode($data,true);
+    		if(empty($data)){
+
+    			exit(self::returnmsg(ErrorCode::$data_error,'数据不合法'));
+    		}
+    		$data_sign = $data['sign'];   //原始sign
+    		$data_token = $data['login_token']; //原始token
+     		unset($data['sign']);         //sign不参与签名
+     		$check_login_token = M('pos_posinfo')->where(array('pos_id'=>$data['pos_id']))->find();
+     		if($check_login_token['login_timeout'] < NOW_TIME){
+
+            	exit(self::returnmsg(ErrorCode::$token_error,'token过期'));
+        }
+
+            //$data['login_token'] = $check_login_token['login_token']; //生成签名的token取数据库
+            $createSign = $this->_createSign($data,$check_login_token['login_token']);   //生成签名
+            if($createSign !== $data_sign){    //对比签名
+            	
+            	exit(self::returnmsg(ErrorCode::$sign_error,'签名错误'));
+            }
+
+              //exit(self::returnmsg(ErrorCode::$ok,'接口调用通过'));
+
+            //根据auth_code来判断调用何种支付类型，auth_code：13开头为微信支付，18为京东支付，28为支付宝支付
+            $pay_type = substr($data['auth_code'],0,2);  //截取条码开头两位数
+            if($pay_type == 13){
+
+            	$this->wxpay($data);
+
+            }elseif($pay_type == 18){
+
+            	$this->jdpay($data);
+
+            }elseif($pay_type == 28){
+
+            	$this->zfbpay($data);
+
+            }else{
+
+            	exit(self::returnmsg(ErrorCode::$paytype_error,'不存在的支付方式'));
+            }
+
+
+		}else{
+
+			exit(self::returnmsg(ErrorCode::$illegal_request,'非法请求'));
+		}
+	}
+
+	/**
+	 * 微信条码支付，通过pos_id查找门店对应方式
+	 */
+    private function wxpay($data = array()){
+
+        $payconfig = $this->findPayconfg($data['pos_id'],$pay_type = 'wx');
+        if($payconfig === false){
+
+        	 exit(self::returnmsg(ErrorCode::$paytype_error,'不存在的支付方式'));
+        }
+        
+       		$parameter=array(
+    			'appid'=>$payconfig['appid'], //微信ID
+    			'sub_appid'=>$payconfig['sub_appid'],
+    		    'appsecret'=>$payconfig['appsecret'], //微信密钥
+    		    'mch_id'=>$payconfig['mch_id'], //微信商户ID
+    		    'sub_mch_id' =>$payconfig['sub_mch_id'],
+    		    'paykey'=>$payconfig['paykey'], //微信商户密钥
+    		);
+
+    		$wxpay=new \weixin_pay_card($parameter);
+
+    		$data = array(
+
+    			'orderid'=>'wx'.$data['pos_id'].$data['posseq'],
+    			'body'   =>'测试商品',
+    			'total_fee' =>$data['je'],
+    			'auth_code' =>$data['auth_code'],
+    			);
+    		$res = $wxpay->micropay($data,$atta);
+    		if($res["return_code"] == "SUCCESS" 
+    			&& $res["result_code"] == "SUCCESS")
+    		{
+    			exit(self::returnmsg(ErrorCode::$ok,'支付成功',$res));
+    		}else{
+
+    			exit(self::returnmsg(ErrorCode::$wxpay_error,'支付失败',$res));
+    		}
+		
+    }
+
+    /**
+     * 京东条码支付
+     */
+    private function jdpay($data = array())
+    {	
+    	$payconfig = $this->findPayconfg($data['pos_id'],$pay_type = 'jd');
+    	if($payconfig === false){
+
+        	 exit(self::returnmsg(ErrorCode::$paytype_error,'不存在的支付方式'));
+        }
+    	$args ['order_no'] = 'jd'.$data['pos_id'].$data['posseq'];
+    	$args ['merchant_no'] = $payconfig['sub_mch_id'];
+    	$args ['amount'] = $data['je']/100;
+    	$args ['seed'] = $data['auth_code'];
+    	$args ['notify_url'] = $payconfig['notify_url'];
+    	$paykey = $payconfig['paykey'];
+    	$object = new \jd_paycode ();
+    	$res = $object->execute ($args,$paykey);
+    	if($res['is_success'] == 'Y'){
+
+    		exit(self::returnmsg(ErrorCode::$ok,'支付成功',$res));
+    	}else{
+    		exit(self::returnmsg(ErrorCode::$jdpay_error,'支付失败',$res));
+
+    	}
+		
+		  dump($res);
+    }
+
+    /**
+     * 支付宝条码支付
+     */
+    private function zfbpay($data = array())
+    {
+    	exit(self::returnmsg(ErrorCode::$paytype_error,'不存在的支付方式'));
+    }
+
+    public function queryWxpay()
+    {
+        $data = file_get_contents('php://input', 'r');
+        $this->log("接收到APP查询订单请求数据：".$data);     //json格式
+        $data = json_decode($data,true);
+        $this->checkSign();
+        $oederid = $data['posseq'];
+        $payconfig = $this->findPayconfg($data['pos_id'],$pay_type = 'wx');
+        if($payconfig === false){
+
+           exit(self::returnmsg(ErrorCode::$paytype_error,'不存在的支付方式,查询失败'));
+        }
+        
+          $parameter=array(
+          'appid'=>$payconfig['appid'], //微信ID
+          'sub_appid'=>$payconfig['sub_appid'],
+            'appsecret'=>$payconfig['appsecret'], //微信密钥
+            'mch_id'=>$payconfig['mch_id'], //微信商户ID
+            'sub_mch_id' =>$payconfig['sub_mch_id'],
+            'paykey'=>$payconfig['paykey'], //微信商户密钥
+        );
+
+        $wxpay=new \weixin_pay_card($parameter);
+        $res = $wxpay->micropay($orderid);
+        if($res["return_code"] == "SUCCESS" 
+          && $res["result_code"] == "SUCCESS")
+        {
+          exit(self::returnmsg(ErrorCode::$ok,'查询成功',$res));
+        }else{
+
+          exit(self::returnmsg(ErrorCode::$wxpay_error,'查询成功',$res));
+        }
+
+    }
+
+    public function checkSign($data = array())
+    {
+        if(empty($data)){
+
+          exit(self::returnmsg(ErrorCode::$data_error,'数据不合法'));
+        }
+        $data_sign = $data['sign'];   //原始sign
+        unset($data['sign']);         //sign不参与签名
+        $check_login_token = M('pos_posinfo')->where(array('pos_id'=>$data['pos_id']))->find();
+        if($check_login_token['login_timeout'] < NOW_TIME){
+
+              exit(self::returnmsg(ErrorCode::$token_error,'token过期'));
+        }
+
+            //$data['login_token'] = $check_login_token['login_token']; //生成签名的token取数据库
+            $createSign = $this->_createSign($data,$check_login_token['login_token']);   //生成签名
+            if($createSign !== $data_sign){    //对比签名
+              
+             exit(self::returnmsg(ErrorCode::$sign_error,'签名错误'));
+            }
+    }
+    /**
+     * 刷卡支付扫码测试
+     */
+    public function scan()
+    {	
+    	$jssdk = new JSSDK("wx7e4a1d43eae038d0", "0a0cc1eea55438f351655df4e0b263c2");
+		$signPackage = $jssdk->GetSignPackage();
+
+		$this->assign('signPackage',$signPackage);
+    	$this->display();
+    }
+
+    /**
+     * 通过posid查询门店对应的支付配置数据
+     * @param pos_id 终端id
+     * @param $pay_type 何种支付方式，目前有微信、京东支付,wx,jd
+     * @return 微信或京东支付配置信息
+     */
+    public function findPayconfg($pos_id = '',$pay_type = '')
+    {
+    	$storeconfig = M('view_pos_posinfo',null)->where(array('pos_id'=>$pos_id))->find();
+    	$configinfo = M('pos_paymode')->where(array('store_id'=>$storeconfig['store_id'],'pay_config_type'=>$pay_type))->find();
+    	if(empty($configinfo)){
+
+    		return false;
+    	}else{
+
+    		return M('pos_payconfig')->where(array('id'=>$configinfo['pay_config_id'],'pay_type'=>$pay_type))->find();
+    	}
+    }
+    /**
+	 * 写入日志
+	 */
+	private function log($data=''){
+		
+		\Think\Log::write($data,'INFO');
+		
+	}
+
+	public function postdata(){
+		$login_token = 'q459zejhzx';
+		$params=array(
+			"auth_code"=>"135762466317888893",
+			"pos_id"=>"1000195407",
+			"userid"=>1,
+			"custno"=>'wx00152244',
+			"posseq"=>'00001'.rand(10,100),
+			"paytype"=>'yd',
+			"yfje"   => 1,
+			"je"   => 1,
+			"reqtime"=>time()
+		);
+		$url = 'http://api.skyatlas.cn/index.php/Home/Index/pay';
+                ksort($params);
+dump($params);
+                echo http_build_query($params);
+		$params['sign'] = $this->_createSign($params,$login_token);
+		dump($params);
+		$res = $this->http($url,json_encode($params));
+		//dump($res);
+		dump( json_decode($res,true));
+	}
+
+	private function http($url, $params = array(), $method = 'POST'){
+			$opts = array(
+				CURLOPT_TIMEOUT        => 30,
+				CURLOPT_RETURNTRANSFER => 1,
+				CURLOPT_SSL_VERIFYPEER => false,
+				CURLOPT_SSL_VERIFYHOST => false
+			);
+			/* 根据请求类型设置特定参数 */
+			switch(strtoupper($method)){
+			  case 'GET':
+				$opts[CURLOPT_URL] = $url .'?'. http_build_query($params);
+				break;
+			  case 'POST':
+				$opts[CURLOPT_URL] = $url;
+				$opts[CURLOPT_POST] = 1;
+				$opts[CURLOPT_POSTFIELDS] = $params;
+				break;
+			}
+			/* 初始化并执行curl请求 */
+			$ch = curl_init();
+			curl_setopt_array($ch, $opts);
+			$data  = curl_exec($ch);
+			$err = curl_errno($ch);
+			$errmsg = curl_error($ch);
+			curl_close($ch);
+			if ($err > 0) {
+			  $this->error = $errmsg;
+			  return false;
+			}else {
+			  return $data;
+			}
+    }
+
+    public function test()
+    {
+    	//dump(json_encode(array(ErrorCode::$login_pos_null, null));
+    }
+
+    public static function returnmsg($result_code='',$result_des='',$result_data=array())
+    {
+    	$data=array(
+    		'result_code'=>$result_code,
+    		'result_des' =>$result_des,
+    		'result_data'=>$result_data,
+    		);
+    	return json_encode($data);
+    }
+
+    /**
+     * 获取登录后的token
+     */
+    public static function getToken()
+    {
+    	return self::getRandChar(10);
+    }
+
+    public static function getRandChar($length){             //生成随机数
+		
+	   $str = null;
+	   $strPol = "23456789abcdefghijkmnpqrstuvwxyz";
+	   $max = strlen($strPol)-1;
+
+	   for($i=0;$i<$length;$i++){
+		   
+			$str.=$strPol[rand(0,$max)];//rand($min,$max)生成介于min和max两个数之间的一个随机整数
+	   }
+
+	   return $str;
+    }
+
+    
+	public static function _createSign($params = array(),$token = '') {
+
+		ksort($params);
+		//$params['login_token'] = $token;
+		return strtoupper(md5(http_build_query($params).'&login_token='.$token));
+	}
+
+  public function arraySort($params = array(),$token = '')    
+  {
+    ksort($params);
+    return http_build_query($params).'&login_token='.$token;
+  }
+}
+
+/**
+ * error code
+ * 仅用作类内部使用，不用于官方API接口的errCode码
+ */
+class ErrorCode
+{
+    public static $ok = 1;
+    public static $login_pos_null = 10001;
+    public static $login_user_error = 10002;
+    public static $login_error = 10003;
+    public static $wxpay_error = 20001;
+    public static $jdpay_error = 30001;
+    public static $sign_error  = 40001;
+    public static $token_error  = 40002;
+    public static $paytype_error  = 40003;
+    public static $pay_timeout = 50001;
+    public static $data_error  = 60001;
+    public static $system_error = 90001;
+    public static $default_error = 90002;
+    public static $illegal_request = 90003;
+    public static $request_timeout = 90004;
+    public static $errCode=array(
+            '1'     => '返回成功',
+            '10001' => 'pos机不存在',
+            '10002' => '账号或密码错误',
+            '10003' => '登录数据不合法',
+            '20001' => '微信刷卡支付失败',
+            '30001' => '京东付款码付款失败',
+            '40001' => '签名效验失败',
+            '40002' => 'token效验失败',
+            '40003' => '不存在的支付方式，请检查',
+            '50001' => '支付超时',
+            '60001' => '数据不合法',
+            '90001' => '系统错误，请联系管理员',
+            '90002' => '其他错误',
+            '90003' => '非法请求',
+            '90004' => '请求超时'
+    );
+    public static function getErrText($err) {
+        if (isset(self::$errCode[$err])) {
+            return self::$errCode[$err];
+        }else {
+            return false;
+        };
+    }
+}
+
+
+class JSSDK {
+  private $appId;
+  private $appSecret;
+
+  public function __construct($appId, $appSecret) {
+    $this->appId = $appId;
+    $this->appSecret = $appSecret;
+  }
+
+  public function getSignPackage() {
+    $jsapiTicket = $this->getJsApiTicket();
+
+    // 注意 URL 一定要动态获取，不能 hardcode.
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+    $timestamp = time();
+    $nonceStr = $this->createNonceStr();
+
+    // 这里参数的顺序要按照 key 值 ASCII 码升序排序
+    $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+
+    $signature = sha1($string);
+
+    $signPackage = array(
+      "appId"     => $this->appId,
+      "nonceStr"  => $nonceStr,
+      "timestamp" => $timestamp,
+      "url"       => $url,
+      "signature" => $signature,
+      "rawString" => $string
+    );
+    return $signPackage; 
+  }
+
+  private function createNonceStr($length = 16) {
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $str = "";
+    for ($i = 0; $i < $length; $i++) {
+      $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+    }
+    return $str;
+  }
+
+  private function getJsApiTicket() {
+    // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
+    $data = json_decode($this->get_php_file("jsapi_ticket.php"));
+    if ($data->expire_time < time()) {
+      $accessToken = $this->getAccessToken();
+      // 如果是企业号用以下 URL 获取 ticket
+      // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
+      $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
+      $res = json_decode($this->httpGet($url));
+      $ticket = $res->ticket;
+      if ($ticket) {
+        $data->expire_time = time() + 7000;
+        $data->jsapi_ticket = $ticket;
+        $this->set_php_file("jsapi_ticket.php", json_encode($data));
+      }
+    } else {
+      $ticket = $data->jsapi_ticket;
+    }
+
+    return $ticket;
+  }
+
+  private function getAccessToken() {
+    // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
+    $data = json_decode($this->get_php_file("access_token.php"));
+    if ($data->expire_time < time()) {
+      // 如果是企业号用以下URL获取access_token
+      // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
+      $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
+      $res = json_decode($this->httpGet($url));
+      $access_token = $res->access_token;
+      if ($access_token) {
+        $data->expire_time = time() + 7000;
+        $data->access_token = $access_token;
+        $this->set_php_file("access_token.php", json_encode($data));
+      }
+    } else {
+      $access_token = $data->access_token;
+    }
+    return $access_token;
+  }
+
+  private function httpGet($url) {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 500);
+    // 为保证第三方服务器与微信服务器之间数据传输的安全性，所有微信接口采用https方式调用，必须使用下面2行代码打开ssl安全校验。
+    // 如果在部署过程中代码在此处验证失败，请到 http://curl.haxx.se/ca/cacert.pem 下载新的证书判别文件。
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);
+    curl_setopt($curl, CURLOPT_URL, $url);
+
+    $res = curl_exec($curl);
+    curl_close($curl);
+
+    return $res;
+  }
+
+  private function get_php_file($filename) {
+    return trim(substr(file_get_contents($filename), 15));
+  }
+  private function set_php_file($filename, $content) {
+    $fp = fopen($filename, "w");
+    fwrite($fp, "<?php exit();?>" . $content);
+    fclose($fp);
+  }
+}
+        
+        
+        
+        
+        
+        
+        
+        
+        

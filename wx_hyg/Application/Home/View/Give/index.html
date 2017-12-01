@@ -1,0 +1,194 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>电子购物卡赠送</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<link rel="stylesheet" href="__PUBLIC__/css/basestyle.css">
+<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<link href="__PUBLIC__/layer/need/layer.css" rel="stylesheet" type="text/css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+    function msg(text) {
+        layer.open({
+            content: text,
+            style: 'background-color:rgba(0,0,0,0.6); color:#fff; border:none;text-align: center;' //自定风格
+                ,
+            time: 3
+        });
+    }
+
+    function loading() {
+        layer.open({
+            type: 2,
+            shadeClose:false,
+            content: '加载中'
+        });
+    }
+    </script>
+
+
+
+</head>
+<body>
+<div class="giveFriend clear">
+    <div class="header">
+        <img src="__PUBLIC__/img/main/zhuanzeng/head_03.png" alt="">
+        <div>
+            <h3>联盛电子购物卡赠送好友</h3>
+            <p>联盛电子购物卡赠送好友</p>
+        </div>
+    </div>
+    <div class="title_money">
+        <p>输入赠送金额</p>
+    </div>
+    <div class="give_money">
+        <div>
+            <label>可用余额:</label>
+            <input type="text" placeholder="0.0000元" value="<{$userinfo.p_ref_change_balance}>元" class="allmoney">
+        </div>
+        <div>
+            <label>赠送金额:</label>
+            <input type="text" placeholder="请输入赠送金额" id="tomoney">
+        </div>
+    </div>
+    <div class="title_money">
+        <p>请选择转赠方式</p>
+    </div>
+    <div class="give_card">
+        <ul>
+            <li class="active" value="1"><img src="__PUBLIC__/img/main/zhuanzeng/normal_03.png" alt="">
+                <img src="__PUBLIC__/img/main/zhuanzeng/active_03.png" alt="">
+            </li>
+            <li value="2"><img src="__PUBLIC__/img/main/zhuanzeng/normal_05.png" alt="">
+                <img src="__PUBLIC__/img/main/zhuanzeng/active_05.png" alt="">
+            </li>
+            <li value="3"><img src="__PUBLIC__/img/main/zhuanzeng/normal_07.png" alt="">
+                <img src="__PUBLIC__/img/main/zhuanzeng/active_07.png" alt="">
+            </li>
+            <li value="4"><img src="__PUBLIC__/img/main/zhuanzeng/normal_09.png" alt="">
+                <img src="__PUBLIC__/img/main/zhuanzeng/active_09.png" alt="">
+            </li>
+        </ul>
+
+    </div>
+    <div class="title_money">
+        <p>填写赠言</p>
+    </div>
+    <div class="give_money give_message">
+        <div>
+            <label>受赠人:</label>
+            <input type="text" placeholder="受赠人姓名" id="toname">
+        </div>
+        <div class="give_fathermsg"><textarea rows="5" cols="30" id="content" maxlength="100" placeholder="一点心意，浓浓的情意。" class="give_msg" ></textarea>
+        </div>
+        <div>
+            <label>署名:</label>
+            <input type="text" placeholder="您的署名" id="fromname">
+        </div>
+    </div>
+
+    <div class="give_footer">
+        <button href="" onclick ="choose('<{$userinfo.p_ref_change_balance}>');">立即转赠</button>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(".give_card li").click(function () {
+            $(this).siblings().removeClass("active");
+            $(this).addClass("active");
+        })
+    })
+
+    function choose (p_ref_change_balance) {
+        var allmoney=$(".allmoney").val();
+        var money  = ($("#tomoney").val());
+        var toname = $("#toname").val();
+        var fromname = $("#fromname").val();
+        var template_id = $(".give_card .active").val();
+//        console.log(money)
+//        console.log(toname)
+//        console.log(fromname)
+//        console.log(template_id)
+        if(allmoney==""||allmoney==null||allmoney==0){
+            msg("没有可用余额")
+            return false;
+        }
+        if(money == '' || money == null || money == 0){
+            msg('请输入正确金额！');
+            return false;
+        }
+        if(money > 1000){
+
+            msg('最多赠送1000元');
+            return false;
+        }
+        var content = $("#content").val();
+
+        var p_ref_change_balance = parseFloat(p_ref_change_balance.replace(",",""));
+        console.log(p_ref_change_balance)
+
+        if(parseFloat(money) > p_ref_change_balance){
+            msg('请输入正确金额！');
+            return false;
+        }
+        if(template_id == '' || template_id == null){
+            msg('请选择祝福方式');
+            return false;
+        }
+        if(toname == '' || toname == null){
+
+            msg('请输入受赠人');
+            return false;
+        }
+        if(fromname == '' || fromname == null){
+
+            msg('请输入署名');
+            return false;
+        }
+
+        loading();
+        // 调试使用
+        window.location.href="choose.html"
+        // 重要内容，调试时注释
+    //     $.ajax({
+    //
+    //         type: 'post',
+    //         url: "<{:U('Give/creatGiveOrder')}>",
+    //         data: {
+    //
+    //         money: money,
+    //             template_id:template_id,
+    //             content: content,
+    //             toname:toname,
+    //             fromname:fromname
+    //
+    //     },
+    //     success: function(res) {
+    //
+    //         if (res.status == 1) {
+    //             window.location.href = "http://www.lianshengit.com/Sign/lqb/index.php/Home/Give/choose/out_trade_no/" + res.out_trade_no;
+    //         } else if (res.status == 0) {
+    //             layer.closeAll();
+    //             msg('创建订单出错，请重试');
+    //             return false;
+    //         } else {
+    //             layer.closeAll();
+    //             msg('网络异常，请重试！');
+    //             return false;
+    //         }
+    //
+    //     },
+    //     error: function(res) {
+    //         msg('网络错误,稍后再试！');
+    //         return false;
+    //     }
+    //
+    // });
+    }
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<script>
+
+var payok_url='<{$payok_url}>'
+window.onload = function(){
+
+	callpay();
+}
+//调用微信JS api 支付
+	function jsApiCall()
+	{
+
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			<?php echo $jsApiParameters; ?>,
+			function(res){
+				WeixinJSBridge.log(res.err_msg);
+				
+				if(3 == res.err_code || res.err_msg == "get_brand_wcpay_request:cancel"){
+
+					alert('支付失败');
+					window.location.href='<{:U('Coinpurse/index')}>';
+					
+				}else if(res.err_msg == "get_brand_wcpay_request:ok"){
+						
+					window.location.href=payok_url;
+				}
+			}
+		);
+	}
+
+	function callpay()
+	{	
+		if (typeof WeixinJSBridge == "undefined"){
+		    if( document.addEventListener ){
+		        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		    }else if (document.attachEvent){
+		        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+		        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		    }
+		}else{
+		    jsApiCall();
+		}
+	}
+	
+	</script>

@@ -1,0 +1,44 @@
+<include file="header" />
+
+<body>
+<div id="wrap">
+    
+    <include file="banner"/>
+    
+    <div class="message_3 clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">选择支付方式</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span></span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <img src="__PUBLIC__/img/icon_weixin.png" alt="">
+                    <span class="msg-cell-text">微信支付</span> <!---->
+                </div>
+                <div class="msg-cell-value">
+                    <span><input type="checkbox" name="checkbox"></span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    
+    </div>
+    <div id="footer" class="footer_3">
+        <div class="footer_msg">
+            <p>应支付的保证金：<b>&yen;</b><span><{$deposit}></span></p>
+        </div>
+        
+        <input data-url="<{:U('Member/pay')}>" type="button" value="立即支付">
+    
+    </div>
+</div>
+
+</body>
+<include file="footer" />

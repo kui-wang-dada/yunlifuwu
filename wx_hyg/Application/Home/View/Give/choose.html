@@ -1,0 +1,83 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: "<{$getSignPackage['appId']}>",
+        timestamp: "<{$getSignPackage['timestamp']}>",
+        nonceStr: "<{$getSignPackage['nonceStr']}>",
+        signature: "<{$getSignPackage['signature']}>",
+        jsApiList: [
+
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+        ]
+    });
+    wx.ready(function () {
+
+        var shareData = {
+            title: "联盛电子会员卡赠送好友",
+            desc: "点击赠送好友",
+            link: "<{$receive_url}>",
+            imgUrl: "<{$img_url}>"
+        };
+
+        wx.onMenuShareAppMessage(shareData);
+        wx.onMenuShareTimeline(shareData);
+        wx.onMenuShareQQ(shareData);
+        wx.onMenuShareWeibo(shareData);
+    })
+    wx.error(function (res) {
+        alert(res.errMsg);
+    });
+
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>选择主题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="stylesheet" href="__PUBLIC__/css/basestyle.css"/>
+    <script src="__PUBLIC__/js/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+    <style>
+        html {
+            font-size: 62.5%;
+        }
+    </style>
+</head>
+
+<body class="card_body shengri">
+<div class="card">
+    <div class="content">
+        <h2>TO：<span><{$orderinfo['toname']}></span></h2>
+        <p class="content_main">
+            <if condition="$orderinfo['content'] eq ''">
+                收到您真切的关心和诚挚的悼念，我谨代表家人表示深深的谢意，顺祝平安。
+                <else/>
+                <{$orderinfo.content}>
+            </if>
+        </p>
+        <div class="content_bottom">
+            <p>From：<span><{$orderinfo['fromname']}></span></p>
+            <p>转&nbsp;赠：&yen <span><{$orderinfo.content}></span></p>
+        </div>
+    </div>
+    <div class="card_button">
+        <a href="" class="normal">立刻领取</a>
+    </div>
+</div>
+
+</body>
+
+<script>
+    $(function () {
+        
+    })
+</script>
+</html>

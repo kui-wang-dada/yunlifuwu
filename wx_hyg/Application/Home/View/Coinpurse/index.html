@@ -1,0 +1,241 @@
+<include file="Public/coinHeader" />
+<body>
+<style>
+.pay_input input{
+    text-align :center;
+}
+</style>
+<div class="container">
+    <div class="header">
+        <div class="header_tips">
+            <div class="fl"> </div>
+            <div class="icon_false fr" onclick="icon_false();"></div>
+            <div class="swrap fr">
+                <div class=" huaban">
+                    <div class="huaban_list"><{$act.title}></div>
+                    <div class="huaban_list"><{$act.title}></div>
+                    <div class="huaban_list"><{$act.title}></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="header_content">
+            <div class="content">
+                <p class="p1">电子购物卡余额(元)</p>
+                <p class="p2"><{$userinfo['p_ref_change_balance']}></p>
+            </div>
+        </div>
+        <div class="header_message">
+            <div>
+                <p>昨日收益(元)</p>
+                <p><{$userinfo.p_dayprofit}></p>
+            </div>
+            <div>
+                <p>总累计收益(元)</p>
+                <p><{$userinfo.p_refprofit}></p>
+            </div>
+            <div>
+                <p>万份收益(元)</p>
+                <p><?php echo number_format($userinfo['p_refrate'],2) ;?></p>
+            </div>
+        </div>
+    </div>
+    <div class="phone">
+        <if condition="$userinfo['p_ref_mobile'] eq ''">
+            <input type="text" placeholder="请输入号码" >
+        <else />
+            <input type="text" value="<{$userinfo['p_ref_mobile']}>" >
+        </if>
+        <span></span>
+    </div>
+    <div class="message">
+        <p class="msg_name">姓名：<span>*<{$userinfo['p_ref_name']|mb_substr=1}></span></p>
+        <p class="msg_number">卡号：<span >******<{$userinfo['p_ref_cardno']|substr=8}></span></p>
+    </div>
+    <div class="money">
+        <ul id="ul">
+            <volist name="list" id="vo">
+                <li onclick="checkPay($(this));">
+                    <a>
+                        <?php echo round($vo['total_fee'],0);?>
+                        <if condition="$vo['is_give'] eq 1">
+                            <span> 送<?php echo round($vo['give_total_fee'],0);?>块</span>
+                        </if>
+                    </a>
+                </li>
+            </volist>
+            <li onclick="checkPay($(this));" class="pay_input">
+                <input type="text" placeholder="输入其他金额">
+            </li>
+        </ul>
+
+    </div>
+    <div class="button_tap">
+        <a onclick="pay()" class="tap_use" >立即充值</a>
+        <a href="../Give/index.html" class="tap_give">转赠好友</a>
+    </div>
+<include file="Public/coinFooter" />
+<script>
+//获取用户输入号码用户
+$(function(){
+    if($(".pay_input input").val()){
+        $(".tap_use").addClass("active");
+        if($(".pay_input input").val()>=20000){
+            msg("充值金额不能超过2万元哦！")
+        }
+    } else{
+        $(".tap_use").removeClass("active");
+    }
+})
+$(".phone input").blur(function () {
+   var phone_number=$(".phone input").val()
+   $.ajax({
+       url: "<{:U('Dc/checkuser')}>",
+       type:"POST",
+       data:{phoneNumber:phone_number},
+       success:function (res) {
+        console.log(res);
+           if(res.status == 1){
+               $(".message .msg_name").html('姓名：<span>'+res.p_ref_name+'</span>');
+               $(".message .msg_number").html('姓名：<span>'+res.p_ref_cardno+'</span>');
+           }else{
+               //$(".message").html("<h3></h3>");
+               $(".message .msg_name").html('该用户不存在或手机号错误，请确认!');
+               $(".message .msg_number").html('');
+           }
+
+       }
+   });
+})
+$(".money input").keyup(function(){
+    if($(this).val()){
+        $(".tap_use").addClass("active");
+        if($(this).val()>=20000){
+            msg("充值金额不能超过2万元哦！")
+        }
+    } else{
+        $(".tap_use").removeClass("active");
+    }
+
+})
+
+function checkPay(obj){
+    var $this = obj;
+    $('#ul li').removeClass('active');
+    $this.addClass('active');
+    if(!($('.pay_input').hasClass('active')) && $('.pay_input input').val() != ''){
+        $('.pay_input input').attr('style','color:#666;font-weight:bold');
+    }
+}
+$('.pay_input input').focus(function(){
+    $(this).attr('placeholder', '');
+    $(this).attr('style','font-weight:bold');
+})
+$('.pay_input input').blur(function(){
+    var value = $(this).val();
+    if(value == ''||value==null||value==0){
+        $(this).attr('placeholder', '输入其他金额');
+        $(this).attr('style','');
+        $('.pay_input').removeClass('active');
+    }
+
+
+})
+function icon_false(){
+    $('.header_tips').hide();
+}
+function msg(text) {
+    layer.open({
+        type:0,
+        content: text,
+        style: 'background-color:rgba(0,0,0,0.6); color:#fff; border:none;text-align: center;' //自定风格
+        ,
+        area:["200px","50px"],
+        time: 3
+    });
+}
+function loading() {
+    layer.open({
+        type: 2,
+        content: '加载中'
+    });
+}
+function pay(){
+    var amount = '';
+    var pay_input = $(".pay_input input").val();
+    console.log(pay_input)
+    if (pay_input != '') {
+        if (pay_input == '' || pay_input == null) {
+            msg('请输入充值金额');
+            return false;
+        }
+        var a = /^[0-9]*(\.[0-9]{1,2})?$/;
+        if (!a.test(pay_input)) {
+            msg("格式不正确");
+            return false;
+        }
+        if (pay_input < 20) {
+            msg("充值金额不能小于20");
+            return false;
+        }
+        if (pay_input > 20000) {
+            msg("充值金额不能大于20000");
+            return false;
+        }
+        amount = pay_input;
+
+        if(amount > 1000){   //充值金额大于1000时提示确认
+
+            layer.open({
+                content: '您的充值金额大于1000，确认是否充值'
+                ,btn: ['充值', '取消']
+                ,yes: function(index){
+                    paycheck(amount);
+                    layer.close(index);
+                }
+            });
+        }else{
+            paycheck(amount);
+        }
+
+    }
+
+}
+
+
+function paycheck(amount) {
+
+    loading();
+    window.location.href="pay.html";
+    // $.ajax({
+    //
+    //     type: 'post',
+    //     url: "<{:U('Coinpurse/createOrder')}>",
+    //     data: {
+    //
+    //         amount: amount
+    //
+    //     },
+    //     success: function(res) {
+    //         if (res.status == 1) {
+    //             window.location.href = "http://www.lianshengit.com/Sign/lqb/index.php/Home/Pay/index/orderid/" + res.orderid;
+    //         } else if (res.status == 0) {
+    //             msg('创建订单出错，请重试');
+    //             return false;
+    //         } else if(res.status == 2){
+    //             msg('充值金额不能大于20000');
+    //             return false;
+    //         } else if(res.status == 3){
+    //             msg('充值金额不能小于20');
+    //             return false;
+    //         }
+    //
+    //     },
+    //     error: function(res) {
+    //
+    //         msg('网络错误,稍后再试！');
+    //     }
+    //
+    // });
+}
+</script>
