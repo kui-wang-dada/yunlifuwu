@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <style>
+        html{font-size:62.5%;}
+    </style>
+</head>
+<body class="card_body daonian">
+<div class="card">
+    <div class="content">
+        <h2>TO：<span><{$orderinfo['toname']}</span></h2>
+        <p class="content_main">
+            <if condition = "$orderinfo['content'] eq ''">
+                收到您真切的关心和诚挚的悼念，我谨代表家人表示深深的谢意，顺祝平安。
+                <else/>
+                <{$orderinfo.content}>
+            </if>
+           </p>
+        <div class="content_bottom">
+            <p>From：<span><{$orderinfo['fromname']}</span></p>
+            <p>转&nbsp;赠：&yen <span><{$orderinfo.content}></span></p>
+        </div>
+    </div>
+    <div class="card_button">
+        <a href="card.html" class="normal">立刻领取</a>
+    </div>
+</div>
+
+</body>
+</html>

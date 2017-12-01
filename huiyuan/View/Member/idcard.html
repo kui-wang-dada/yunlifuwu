@@ -1,0 +1,37 @@
+<include file="header" />
+
+<body>
+<div id="wrap">
+    
+    <include file="banner"/>
+    
+    <div class="message_2 clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text"><input type="text" v-model="username" value="<{$username}>" class="name" placeholder="请输入姓名"></span> <!---->
+                </div>
+                <div class="msg-cell-value"><span class="icon_x i-username" v-bind:style="{display: username ? '' : 'none'}"><img src="__PUBLIC__/img/icon_X.jpg" alt=""></span>
+                </div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">
+                        <input type="text" placeholder="身份证号码" v-model="idcard" value="<{$idcard}>" class="shenfen"></span>
+                </div>
+                <div class="msg-cell-value"><span class="icon_x i-idcard" v-bind:style="{display: idcard ? '' : 'none'}"><img src="__PUBLIC__/img/icon_X.jpg" alt=""></span>
+                </div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    </div>
+    <input data-url="<{:U('Member/idcard')}>" v-bind:style="{backgroundColor: username && idcard ? '#FF2832' : '#b3b3b3'}" class="nextstep" type="button" value="下一步">
+</div>
+
+</body>
+<include file="footer" />

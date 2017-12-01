@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0 ,user-scalable=no">
+    <link rel="stylesheet" href="base.css">
+    <script src="Public/js/jquery-2.2.3.min.js"></script>
+</head>
+<body id="pay_body">
+<div id="wrap">
+    <div id="content">
+        <div class="pay">网上支付</div>
+        <div class="pay pay_weixin">
+            <div class="pay_left">
+                <img src="images/chongzhi/icon_weixin.png" alt="">
+                <p>微信支付</p>
+            </div>
+            <span><input type="radio" name="radio" value="weixin"></span>
+        </div>
+        <div class="pay">
+            <div class="pay_left">
+                <img src="images/chongzhi/icon_zfb.png" alt="">
+                <p>支付宝</p>
+            </div>
+            <span><input type="radio" name="radio" value="zhifubao"></span>
+        </div>
+        <div class="pay">
+            <div class="pay_left">
+                <img src="images/chongzhi/icon_yl.png" alt="">
+                <p>银联支付</p>
+            </div>
+            <span><input type="radio" name="radio" value="yinlian"></span>
+        </div>
+    </div>
+    <a  class="pay_a">立即支付</a>
+</div>
+</body>
+<script>
+    $(function(){
+        var choose=""
+        $(".pay input").click(function () {
+
+            $(".pay span").removeClass("active")
+            $(this).parent().addClass("active");
+            $(".pay_a").addClass("active");
+
+        })
+        $(".pay_a").click(function(){
+            window.location.href="pay_result.html?false";
+            var choose=$(".pay input:checked").val();
+            $.ajax({
+                type:"post",
+                url:"",
+                data:choose,
+                success:function (res) {
+                    if(res.status){
+                        var type=res.data.type;
+                        window.location.href="pay_result.html?"+type;
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

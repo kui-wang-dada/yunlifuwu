@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <link href="../../Public/css/base.css?t=1" rel="stylesheet" type="text/css">
+    <link href="../../Public/css/common.css?t=2" rel="stylesheet" type="text/css">
+    <link href="../../Public/css/me.css?t=3" rel="stylesheet" type="text/css">
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js?t=1"></script>
+    <link href="../../Public/layer/need/layer.css?t=1" rel="stylesheet" type="text/css">
+    <script src="../../Public/layer/layer.js?t=1"></script>
+    <script>
+    $(function() {
+        layer.open({
+        type: 2,
+        shadeClose:false,
+        content: '加载中...'
+        });
+    
+    document.onreadystatechange = subSomething;
+    function subSomething()
+        {
+            try
+            {
+                if(document.readyState == "complete"){
+                layer.closeAll();
+                }
+            }
+            catch(e)
+            {
+                layer.open({
+                    type: 2,
+                    content: '页面加载失败'
+                    });
+            }
+        }
+    })
+    function msg(text) {
+        layer.open({
+            content: text,
+            style: 'background-color:#EA5824; color:#fff; border:none;text-align: center;' //自定风格
+                ,
+            time: 3
+        });
+    }
+
+    function loading() {
+        layer.open({
+            type: 2,
+            content: '加载中'
+        });
+    }
+    </script>
+    <title>
+        我的电子购物卡
+    </title>
+    <style>
+    body {
+        height: 100%;
+        min-height: 568px;
+        max-height: 736px;
+    }
+    
+    .mag_t_30 {
+        margin-top: 25px;
+    }
+    
+    .color_border {
+        color: #EA5824;
+        background-color: #fff;
+        border: solid 1px #EA5824;
+    }
+    
+    .ind_invest li span {
+        font-size: 20px;
+    }
+    
+    .index_news_list {
+        line-height: 28px;
+    }
+    
+    .home_top {
+        padding-top: 10px;
+    }
+    
+    .pad_bom_100 {
+        padding-bottom: 0px;
+    }
+    
+    #tishiText {
+        font-size: 11px;
+        color: #c92229
+    }
+    
+    .btn_normal {
+        line-height: 44px !important;
+    }
+    
+    .index_state_ico p {
+        font-size: 15px;
+    }
+    
+    .tou_intrest {
+        position: relative;
+    }
+    
+    .tou_intrest .intrest_img {
+        width: 8px;
+        height: 8px;
+        position: relative;
+        left: 2px;
+        top: -3px;
+    }
+    
+    .rate_fs {
+        font-family: "Lucida Grande", "Lucida Sans Unicode", "STHeitiSC-Light", "Helvetica", "Arial", "Verdana", "sans-serif"
+    }
+    
+    .index_news_list a {
+        left: 0;
+        height: 28px;
+    }
+    
+    .index_news_list a .a_close {
+        position: absolute;
+        top: 0;
+    }
+    
+    .index_state_ico .zhongqiu {
+        height: 86px;
+        position: absolute;
+        right: 0px;
+        bottom: 0;
+    }
+    
+    .list_col_2 li {
+        width: 45%;
+    }
+    
+    .btn_normal {
+        line-height: 57px !important;
+    }
+    
+    .pad_lr_15 {
+        padding-left: 10%;
+    }
+    
+    .btn_normal1 {
+        width: 45%;
+        display: inline-block;
+        line-height: 45px;
+        font-size: 17px;
+        background: #EA5824;
+        color: #fff;
+        border-radius: 6px;
+        text-align: center;
+    }
+    .ico_news_close{
+        line-height: 30px;
+        padding-left: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="overline flo pad_bom_100">
+        <div class="overline  index_state_ico flo pos_fx " style="background:-webkit-linear-gradient(top , #EA5824 ,#f96051);background:-moz-linear-gradient(top , #EA5824 ,#EA5824); height: 150px;">
+            <!-- 数据统计中 -->
+            <!--  有收益率<25.00时的效果  -->
+            <a class="col_fff" href="<{:U('payDetail')}>">
+                <div class="overline pos_ab" style="top:30%;height:100px">
+                    <p style="line-height:30px;height:30px;position:relative;margin-top:-28px;">我的余额(元)</p>
+                    <div class="pos_ab overline text_center change_word rate_yeas rate_fs" style="color: #fff;height:100%;font-size:40px; top:0px;">
+                        <b id="number" class="col_fff" style="font-size:40px;color:#fff;"><{$userinfo['p_ref_change_balance']}></b>
+                        <!--<span style="font-size: 10px; margin-left:-12px;">明细</span>-->
+                    </div>
+                    <div class="pos_ab pos_tr_0" style="line-height: 88px; height: 88px;right:15px;top:13px;">
+                        <a href="<{:U('payDetail')}>">
+                            <img style="height: 32px;" src="../../Public/img/url_user_goself.png">
+                        </a>
+                    </div>
+                </div>
+            </a>
+            <div class="pos_ab pos_lb_0 overline index_news_list clearfix">
+                <a href="" class="clearfix" id="scroll_left" style="display: inline-block; width:100%;">
+                    <div id="lecture" class="col_4657 overline a_close " style="display: inline-block">
+                        <div id="demo" style="overflow:hidden;height:50px;width:100%;">
+                            <table cellpadding="0" cellspace="0" border="0">
+                                <tr>
+                                    <td id="demo1">
+                                        <table width="400px" height="30px" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td><{$act.title}></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td id="demo2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </a>
+                <div class="pos_ab ico_news_close">X</div>
+            </div>
+        </div>
+        <script>
+        var speed = 30
+        var MyMar = setInterval(Marquee, speed)
+        demo2.innerHTML = demo1.innerHTML;
+        demo.onmouseover = function() {
+            clearInterval(MyMar);
+        }
+        demo.onmouseout = function() {
+            MyMar = setInterval(Marquee, speed);
+        }
+
+        function Marquee() {
+            if (demo2.offsetWidth - demo.scrollLeft <= 0)
+                demo.scrollLeft -= demo1.offsetWidth;
+            else {
+                demo.scrollLeft++;
+            }
+        }
+        </script>
+        <div class="overline flo  pad_tb_15 home_top pos_fx" style="top:30%;left:0px;overflow-y: scroll;">
+            <ul class="overline flo cols_3 ind_invest list">
+                <li>
+                    <a href="">
+                        <p style="padding-bottom:3px;">昨日收益(元)</p>
+                        <span style="font-size:19px;" id="yesterDayIncome"><{$userinfo.p_dayprofit}></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p style="padding-bottom:3px;">总累计收益(元)</p>
+                        <span style="font-size:19px;" id="sumIncome"><{$userinfo.p_refprofit}></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <p class="tou_intrest" style="padding-bottom:3px;">万份收益(元)</p>
+                        <span style="font-size:19px; color:red;" id="sumMoney"><?php echo number_format($userinfo['p_refrate'],2) ;?></span>
+                    </a>
+                </li>
+            </ul>
+            <div id="chongzhi" class="overline flo  pad_lr_15  list_col_2 list ind_btns mag_t_30" style="padding-right: 7.5px;">
+                <ul id="ul">
+                    <volist name="list" id="vo">
+                        <li style="padding:0px; padding-right:7.5px;">
+                            <a class="btn_normal color_border" style="height:60px;font-size:22px;margin-top: 8px;line-height: 57px;">
+                                <?php echo round($vo['total_fee'],0);?>
+                                <if condition="$vo['is_give'] eq 1">
+                                    <span style="font-size:13px;"> 送<?php echo round($vo['give_total_fee'],0);?>块</span>
+                                </if>
+                            </a>
+                        </li>
+                    </volist>
+                    <li style="padding:0px; padding-right:7.5px;">
+                        <input onFocus="hidecolor();" class="btn_normal color_border" id="in_total_fee" name="total_fee" placeholder="输入其他金额" value="" style="height:60px;font-size:18px;margin-top: 8px;line-height: 70px;" type="number">
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" id="total_fee" value="">
+            <div class="overline flo fs_12" style=' padding-top:35px;'>
+                <p class="text_center">
+                    <li style="padding:0px; padding-left: 12%;padding-right: 15%;margin-bottom: 50px;">
+                    <a class="btn_normal1"  onclick="pay()" style="line-height:40px;">立即支付</a>
+                    <a class="btn_normal1" style="margin-left: 7%;line-height: 45px;" href="<{:U('Dc/index')}>"  style="line-height:40px;">代充值</a>
+                    </li>
+                    
+                </p>
+            </div>
+            <div class="pos_fx pos_lb_0 com_foot" style="position:fixed;">
+                <ul class="list com_foot_menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <img src="../../Public/img/touzi@3x.png">
+                            <p>首页</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.lianshengit.com/ls2014/mindex.aspx?page=card" class="nav_menus">
+                            <img src="../../Public/img/zhanghu@3x.png">
+                            <p>付款</p>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="pos_ab" id="red-point"></div>
+                        <a href="<{:U('shouyi')}>" class="nav_menus">
+                            <img src="../../Public/img/liwu@3x.png">
+                            <p>收益</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+        var Uarry = $("#ul li"); //获取所有的li元素
+        $("#ul li").click(function() { //点击事件
+            var count = $(this).index(); //获取li的下标
+            var Tresult = Uarry.eq(count).text();
+            console.log(Tresult);
+            $("#total_fee").val(Tresult);
+        })
+    })
+
+    function hidecolor() {
+        $("#chongzhi li a").removeClass('selecteda');
+        $("#total_fee").val('');
+    }
+
+    function pay(){
+    	var amount = '';
+        var in_total_fee = $("#in_total_fee").val();
+        var total_fee = $("#total_fee").val();
+
+        if (in_total_fee != '') {
+            if (in_total_fee == '' || in_total_fee == null) {
+                msg('请输入充值金额');
+                return false;
+            }
+            var a = /^[0-9]*(\.[0-9]{1,2})?$/;
+            if (!a.test(in_total_fee)) {
+                msg("格式不正确");
+                return false;
+            }
+            if (in_total_fee < 20) {
+                msg("充值金额不能小于20");
+                return false;
+            }
+            if (in_total_fee > 20000) {
+                msg("充值金额不能大于20000");
+                return false;
+            }
+            amount = in_total_fee;
+
+            if(amount > 1000){   //充值金额大于1000时提示确认
+
+                 layer.open({
+                    content: '您的充值金额大于1000，确认是否充值'
+                    ,btn: ['充值', '取消']
+                    ,yes: function(index){
+                      paycheck(amount);
+                      layer.close(index);
+                    }
+                  });
+            }else{
+                paycheck(amount);
+            }
+
+        } else {
+
+            if (total_fee == '') {
+                msg('请选择充值金额');
+                return false;
+            } else {
+                amount = total_fee;
+                paycheck(amount);
+            }
+        }
+    }
+    // $("#submit").click(function() {
+    //     // alter("确认支付");
+    //     var amount = '';
+    //     var in_total_fee = $("#in_total_fee").val();
+    //     var total_fee = $("#total_fee").val();
+
+    //     if (in_total_fee != '') {
+    //         if (in_total_fee == '' || in_total_fee == null) {
+    //             msg('请输入充值金额');
+    //             return false;
+    //         }
+    //         var a = /^[0-9]*(\.[0-9]{1,2})?$/;
+    //         if (!a.test(in_total_fee)) {
+    //             msg("格式不正确");
+    //             return false;
+    //         }
+    //         if (in_total_fee < 20) {
+    //             msg("充值金额不能小于20");
+    //             return false;
+    //         }
+    //         if (in_total_fee > 20000) {
+    //             msg("充值金额不能大于20000");
+    //             return false;
+    //         }
+    //         amount = in_total_fee;
+
+    //         if(amount > 1000){   //充值金额大于1000时提示确认
+
+    //              layer.open({
+    //                 content: '您的充值金额大于1000，确认是否充值'
+    //                 ,btn: ['充值', '取消']
+    //                 ,yes: function(index){
+    //                   paycheck(amount);
+    //                   layer.close(index);
+    //                 }
+    //               });
+    //         }else{
+    //             paycheck(amount);
+    //         }
+
+    //     } else {
+
+    //         if (total_fee == '') {
+    //             msg('请选择充值金额');
+    //             return false;
+    //         } else {
+    //             amount = total_fee;
+    //             paycheck(amount);
+    //         }
+    //     }
+        
+    // })
+
+    function paycheck(amount) {
+
+        loading();
+        $.ajax({
+
+            type: 'post',
+            url: "<{:U('Coinpurse/createOrder')}>",
+            data: {
+
+                amount: amount
+
+            },
+            success: function(res) {
+                if (res.status == 1) {
+                    window.location.href = "http://www.lianshengit.com/Sign/lqb/index.php/Home/Pay/index/orderid/" + res.orderid;
+                } else if (res.status == 0) {
+                    msg('创建订单出错，请重试');
+                    return false;
+                } else if(res.status == 2){
+                    msg('充值金额不能大于20000');
+                    return false;
+                } else if(res.status == 3){
+                    msg('充值金额不能小于20');
+                    return false;
+                }
+
+            },
+            error: function(res) {
+
+                msg('网络错误,稍后再试！');
+            }
+
+        });
+    }
+    </script>
+    <style>
+    .selecteda {
+        background-color: #EA5824;
+        color: white;
+    }
+    </style>
+    <script>
+    var flag = 0;
+    $("#chongzhi li a").on("click", function() {
+
+        if (flag == 0) {
+            $(this).addClass('selecteda');
+            flag = 1;
+        } else {
+
+            $("#chongzhi li a").removeClass('selecteda');
+            $(this).addClass('selecteda');
+
+        }
+    })
+    $(".ico_news_close").click(function() {
+        $(".index_news_list").css({"display":"none"});
+    });
+    </script>
+</body>
+
+</html>

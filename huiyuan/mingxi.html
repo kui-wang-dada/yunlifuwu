@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <script src="Public/js/jquery-2.2.3.min.js"></script>
+</head>
+<body class="mingxi_body">
+<div class="mingxi">
+    <div class="header">
+        <div class="active"><p>全部</p><span></span></div>
+        <div><p>收益</p><span></span></div>
+        <div><p>充值</p><span></span></div>
+        <div><p>消费</p><span></span></div>
+    </div>
+    <!--<div class="mingxi_none">-->
+        <!--<div class="mingxi_none">-->
+            <!--<img class="mingxi_img" src="images/kapian/shouzhi_02.png" alt="">-->
+            <!--<p class="mingxi_text">暂无<span>收益</span>明细</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <ul class="mingxi_content">
+        <!--<li class="mingxi_item">-->
+        <!--<div class="mingxi_left">-->
+        <!--<div class="left_top">消费-<span>线上购物</span></div>-->
+        <!--<div class="left_bottom">订单号：1283123ddsafds</div>-->
+        <!--</div>-->
+        <!--<div class="mingxi_right">-->
+        <!--<div :class="[mingxi_true?mingxi_classA:mingxi_classB]">- 1000.00</div>-->
+        <!--<div class="right_bottom">2016-05-05 11:56</div>-->
+        <!--</div>-->
+        <!--</li>-->
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top right_top_active">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top right_top_active">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top right_top_active">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top right_top_active">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+        <li class="mingxi_item">
+
+            <div class="mingxi_left">
+                <div class="left_top">消费-<span>线上购物</span></div>
+                <div class="left_bottom">订单号：1283123ddsafds</div>
+            </div>
+            <div class="mingxi_right">
+                <div class="right_top right_top_active">+99</div>
+                <div class="right_bottom">2017.2.12</div>
+            </div>
+        </li>
+
+    </ul>
+    <div class="footer">
+        <a href="index.html">
+            <span class="normal_1"></span>
+            <span>充值</span>
+        </a>
+        <a href="mingxi.html"  class="active">
+            <span class="normal_2"></span>
+            <span>明细</span></a>
+        <a href="erweima.html">
+            <span class="normal_3"></span>
+            <span>付款</span></a>
+    </div>
+</div>
+</body>
+<script src="base.js"></script>
+<script>
+    $(function(){
+        $(".header div").click(function(){
+            $(".header div").removeClass("active");
+            $(this).addClass("active");
+        })
+        if($(".right_top span").text("+")){
+            $(".right_top").addClass("right_top_active")
+        }else if($(".right_top span").text("-")){
+            $(".right_top").removeClass("right_top_active")
+        }
+    })
+</script>
+
+</html>

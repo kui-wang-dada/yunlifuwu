@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+       <meta content="telephone=no" name="format-detection"/>
+    <title>我的二维码</title>
+     <link rel="stylesheet" href="__PUBLIC__/qrcode/css/weui.min.css"/>
+     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+     <script type="text/javascript" src="__PUBLIC__/qrcode/js/qrcode.js"></script>
+     <script type="text/javascript" src="__PUBLIC__/qrcode/js/jquery.qrcode.js"></script>
+     <script type="text/javascript" src="__PUBLIC__/qrcode/js/jquery-barcode.min.js"></script>
+    <style>
+        body {
+            font-family: "思源黑体", "冬青", "SF", "Robot";
+            background-color: #FFFFFF;
+        }
+
+        .btn {
+            border-radius: 0;
+            background-color: #EA5824;
+        }
+
+        .img {
+            text-align: center;
+        }
+
+        .img1 {
+            margin-top: 20%;
+            
+        }
+
+        .img2 {
+            margin-top: 5%;
+        }
+
+    </style>
+
+ <script>
+    var time = 60000;
+    $(function(){
+        countDown(time);
+        setInterval(function(){
+            window.location.reload();
+            countDown(time);
+        },time);
+    })
+
+    function countDown(time){
+        var tempTime = time/1000;
+        $('.qr_time_tips').text('当前会员电子码有效期剩余'+tempTime+'秒').css('text-align','center');
+        var tempInteval = setInterval(function(){
+            tempTime--;
+            $('.qr_time_tips').text('当前会员电子码有效期剩余'+tempTime+'秒').css('text-align','center');
+            if(tempTime==0){
+                clearInterval(tempInteval);
+            }
+        },1000);
+    }
+</script>
+</head>
+<body>
+<div class="weui-btn weui-btn_warn btn">付款二维码</div>
+<div class="page__bd page__bd_spacing img">
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <div class="placeholder">
+                <div class="img1" id="qrCode"></div>
+                
+                <center><div class="img2" id="barcode">
+                </div>
+                 <!-- <p style="font-size:12px;"><{$cardno}></p> --></center>
+            </div>
+            <p class="qr_time_tips" style="font-size:13px;color:#ccc; margin-top: 10px;"></p>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+var textLink = "<{$cardno}>";
+
+ $('#qrCode').qrcode({width:220,height:220,text:textLink,refresh:false,time:30000}); 
+
+$("#barcode").barcode(textLink, "code128",{barWidth:1, barHeight:70,showHRI:false});
+</script>
+</html>

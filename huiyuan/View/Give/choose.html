@@ -1,0 +1,436 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+  	wx.config({
+      debug:false,
+      appId: "<{$getSignPackage['appId']}>",
+      timestamp: "<{$getSignPackage['timestamp']}>",
+      nonceStr: "<{$getSignPackage['nonceStr']}>",
+      signature: "<{$getSignPackage['signature']}>",
+      jsApiList: [
+	  
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo'
+      ]
+  	});
+    wx.ready(function() {
+        
+        var shareData = {
+             title: "联盛电子会员卡赠送好友",
+             desc: "点击赠送好友",
+             link: "<{$receive_url}>",
+             imgUrl: "<{$img_url}>"
+            };
+        
+        wx.onMenuShareAppMessage(shareData);
+        wx.onMenuShareTimeline(shareData);
+        wx.onMenuShareQQ(shareData);
+        wx.onMenuShareWeibo(shareData);    
+     })
+    wx.error(function(res) {
+        alert(res.errMsg);
+    });
+	
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>选择主题</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="__PUBLIC__/css/weui-1.0.2.min.css" />
+		<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+		<style type="text/css">
+			.ui-scroll-wrapper {
+				position: absolute;
+				overflow-x: visible;
+				overflow-y: hidden;
+				left: 0;
+				right: 0;
+				top: 12px;
+				bottom: 88px;
+			}
+			.ui-scroll {
+				position: relative;
+				width: 300%;
+				height: 100%;
+				overflow: hidden;
+				-webkit-overflow-scrolling: touch;
+			}
+			.ui-scroll>.ui-card {
+				position: relative;
+				width: 30.33%;
+				margin-left: 1.5%;
+				margin-right: 1.5%;
+				height: 100%;
+				float: left;
+			}
+			.ui-scroll>.ui-card .ui-background,
+			.ui-scroll>.ui-card .ui-mask {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+			}
+			.ui-scroll>.ui-card .ui-mask {
+				background-color: rgba(0,0,0,0);
+			}
+			.ui-scroll>.ui-card .ui-background {
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				-webkit-filter: blur(1px);
+			    -moz-filter: blur(1px);
+			    filter: blur(1px);
+			}
+			.ui-scroll>.ui-card:nth-child(1) .ui-background {
+				background-image: url(__PUBLIC__/img/1.jpg?t=11221);
+			}
+			.ui-scroll>.ui-card:nth-child(2) .ui-background {
+				background-image: url(__PUBLIC__/img/2.jpg?t=1);
+			}
+			.ui-scroll>.ui-card:nth-child(3) .ui-background {
+				background-image: url(__PUBLIC__/img/3.jpg?t=1);
+			}
+			.ui-scroll>.ui-card:nth-child(4) .ui-background {
+				background-image: url(http://od8eei3h6.bkt.clouddn.com/1108/card-4.jpg?t=1);
+			}
+			.ui-scroll>.ui-card .ui-panel {
+				height: 100%;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-orient: vertical;
+				-webkit-box-direction: normal;
+				-webkit-flex-direction: column;
+				-ms-flex-direction: column;
+				flex-direction: column;
+			}
+			.ui-scroll>.ui-card .ui-panel-item {
+				z-index: 3;
+			}
+			.ui-scroll>.ui-card .ui-panel-item:nth-child(2) {
+				position: relative;
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				-ms-flex: 1;
+				flex: 1;
+			}
+			.ui-scroll>.ui-card .ui-panel-item:nth-child(2) .ui-cells,
+			.ui-scroll>.ui-card .ui-panel-item:nth-child(2) .ui-flow{
+			    position: absolute;
+			    left: 0;
+			    right: 0;
+			    top: 40%;
+			    -webkit-transform: translateY(-50%);
+			    transform: translateY(-50%);
+			}
+			.ui-scroll>.ui-card .ui-badge {
+				position: absolute;
+			    right: -1%;
+			    top: 24px;
+			}
+			.ui-card.ui-round,
+			.ui-card.ui-round .ui-background,
+			.ui-card.ui-round .ui-mask {
+				border-radius: 10px;
+			}
+			@media screen and (max-height: 480px) { 
+				.ui-scroll>.ui-card:nth-child(4) .ui-panel-item:nth-child(3) { 
+					display: none!important;
+				} 
+			} 
+			
+			/* 图标 */
+			@font-face {
+				font-family: 'iconfont';
+				src: url('http://m.youlinyouke.com/1108/css/iconfont.ttf') format('truetype');
+			}
+			.ui-icon {
+				font-family: "iconfont" !important;
+				font-size: 2rem;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				-webkit-text-stroke-width: 0.2px;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			/* 指示器 */
+			.ui-scroll-indicator {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 68px;
+				text-align: center;
+			}
+			.ui-scroll-indicator-item {
+				display: inline-block;
+				margin-left: 6px;
+				margin-right: 6px;
+				width: 10px;
+				height: 10px;
+				background-color: #ccc;
+				border-radius: 9999px;
+				border-top-left-radius: 9999px;
+				border-top-right-radius: 9999px;
+				border-bottom-left-radius: 9999px;
+				border-bottom-right-radius: 9999px;
+			}
+			.ui-scroll-indicator-item.ui-active {
+				background-color: #fecd40;
+			}
+			
+			/* 底部 */
+			.ui-fixed-bottom {
+				z-index: 9;
+			}
+			.ui-fixed-bottom .ui-flex-item:first-child {
+				width: 60%;
+			}
+			.ui-fixed-bottom .ui-flex-item:last-child {
+				width: 40%;
+			}
+			.ui-fixed-bottom .ui-flex-item>.ui-container {
+				width: 100%;
+			}
+			.ui-fixed-middle {
+				position: fixed;
+				left: 50%;
+				top: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div id="loading" class="ui-fixed-middle">
+			<div class="ui-spinner-bounce">
+				<div class="ui-spinner"></div>
+				<div class="ui-spinner"></div>
+			</div>
+			<label class="ui-label ui-grey ui-text-tiny ui-line-30">页面奋力加载中 ...</label>
+		</div>
+		<div id="wrapper" style="display: none;">
+		
+		<div class="ui-section ui-scroll-wrapper">
+			<div class="ui-scroll">
+				
+				<div class="ui-card ui-card-shadow ui-round ui-black ui-inverted" style="height: 50%;top: 25%;">
+					<div class="ui-background"></div>
+					<div class="ui-mask"></div>
+					<div class="ui-text-small ui-panel">
+						<div class="ui-section ui-container ui-panel-item">
+							<label class="ui-label ui-text-center ui-line-20 ui-yellow">
+								<span class="ui-text-huge ui-text-bold">感谢悼念</span>
+							</label>
+						</div>
+						<div class="ui-panel-item">
+							<div class="ui-cells ui-cells-plain">
+								<div class="ui-cell">
+									<div class="ui-cell-col ui-cell-primary">
+										<label class="ui-label ui-text-bold ui-line-10" style="color: #FD7107;">To:<{$orderinfo['toname']}></label>
+									</div>
+									
+								</div>
+								<div class="ui-cell">
+									<div class="ui-cell-col ui-cell-primary">
+										<label class="ui-label ui-line-10" style="white-space: inherit;line-height: 1.5em;color: #FD7107;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<if condition = "$orderinfo['content'] eq ''">
+										收到您真切的关心和诚挚的悼念，我谨代表家人表示深深的谢意，顺祝平安。
+										<else/>
+										<{$orderinfo.content}>
+										</if>
+										</label>
+									</div>
+									
+								</div>	
+								<label style="margin-right: 12px;color:#FD7107;font-size: 16px;" class="ui-label ui-text-huge ui-text-right ui-line-20 ui-yellow">From:<{$orderinfo['fromname']}></label>			
+							</div>
+						</div>
+						<div class="ui-section ui-container ui-panel-item">
+							
+						</div>
+					</div>
+				</div>
+				<div class="ui-card ui-card-shadow ui-round ui-black ui-inverted">
+					<div class="ui-background"></div>
+					<div class="ui-mask"></div>
+					<div class="ui-text-small ui-panel">
+						<div class="ui-section ui-container ui-panel-item">
+							<label class="ui-label ui-text-center ui-line-20 ui-yellow">
+								<span class="ui-text-huge ui-text-bold">节日祝福</span>
+							</label>
+						</div>
+						<div class="ui-panel-item">
+							<div class="ui-cells ui-cells-plain">
+								<div class="ui-cell">
+									<div class="ui-cell-col ui-cell-primary">
+										<label class="ui-label ui-text-bold ui-line-10">To:<{$orderinfo['toname']}></label>
+									</div>
+									
+								</div>
+								
+								<div class="ui-cell">
+									<div class="ui-cell-col ui-cell-primary">
+										<label class="ui-label ui-line-10" style="white-space: inherit;line-height: 1.5em;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<if condition = "$orderinfo['content'] eq ''">
+										一点心意，浓浓情义。
+										<else/>
+										<{$orderinfo.content}>
+										</if>
+										</label>
+									</div>
+								</div>
+								<label style="margin-right: 12px;font-size: 16px;" class="ui-label ui-text-huge ui-text-right ui-line-20 ui-yellow">From:<{$orderinfo['fromname']}></label>		
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+				<div class="ui-card ui-card-shadow ui-round ui-black ui-inverted">
+					<div class="ui-background"></div>
+					<div class="ui-mask"></div>
+					<div class="ui-text-small ui-panel">
+						<div class="ui-section ui-container ui-panel-item">
+							<label class="ui-label ui-text-center ui-line-20 ui-yellow">
+								<span class="ui-text-huge ui-text-bold">生日祝福</span>
+							</label>
+						</div>
+						<div class="ui-panel-item">
+							<div class="ui-cells ui-cells-plain">
+								<div class="ui-cell">
+									<div class="ui-cell-col ui-cell-primary">
+										<label class="ui-label ui-text-bold ui-line-10">To:<{$orderinfo['toname']}></label>
+									</div>
+									
+								</div>
+								<div class="ui-cell">
+									<div class="ui-cell-col ui-cell-primary">
+										<label class="ui-label ui-line-10" style="white-space: inherit;line-height: 1.5em;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<if condition = "$orderinfo['content'] eq ''">
+										一点心意，浓浓情义。
+										<else/>
+										<{$orderinfo.content}>
+										</if></label>
+									</div>
+								</div>
+								<label style="margin-right: 12px;font-size: 16px;" class="ui-label ui-text-huge ui-text-right ui-line-20 ui-yellow">From:<{$orderinfo['fromname']}></label>	
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+			</div>
+			<div class="ui-scroll-indicator">
+				<div class="ui-scroll-indicator-item ui-active"></div>
+				<div class="ui-scroll-indicator-item"></div>
+				<div class="ui-scroll-indicator-item"></div>
+				<!--<div class="ui-scroll-indicator-item"></div>-->
+			</div>
+		</div>
+		<div class="ui-fixed-bottom ui-white ui-inverted">
+			<div class="ui-flex ui-text-small">
+				<div class="ui-flex-item ui-border-top">
+					<div class="ui-container">
+						<label class="ui-label ui-text-left">
+							<!-- <span id="_t_money">金额</span>&nbsp;<del id="_n_price_old">￥1731</del>&nbsp; -->
+							<span class="ui-yellow ui-text-huge" id="_n_price">￥<{$orderinfo.total_fee}></span>
+						</label>
+					</div>
+				</div>
+				
+				<!--<div class="ui-flex-item ui-grey ui-inverted">
+					<div class="ui-container ui-text-center" id="_btn_pay">20点开抢</div>
+				</div>-->
+				<div class="ui-flex-item ui-yellow ui-inverted">
+					<div class="ui-container ui-text-center" id="_btn_pay">立即付款</div>
+				</div>
+			</div>
+		</div>
+		
+        </div>
+	</body>
+	<script src="__PUBLIC__/js/flipsnap-0.6.3.min.js"></script>
+	<script>
+		var _currentIndex = 0,
+			_data = [
+				{	
+					goodsname : "",
+					price: '',
+					priceOld: '',
+					link: "<{:U('Give/giveOrder',array('out_trade_no'=>$orderinfo['out_trade_no'],'theme_id'=>1))}>"
+				},
+				{	
+					goodsname : "",
+					price: '',
+					priceOld:'' ,
+					link: "<{:U('Give/giveOrder',array('out_trade_no'=>$orderinfo['out_trade_no'],'theme_id'=>2))}>"
+				},
+				{	
+					goodsname : "",
+					price: '',
+					priceOld: '',
+					link: "<{:U('Give/giveOrder',array('out_trade_no'=>$orderinfo['out_trade_no'],'theme_id'=>3))}>"
+					
+				},
+				// {	
+				// 	goodsname : "黑卡",
+				// 	price: 6800 - <{$yuyuemoney}>,
+				// 	link: "<{:U('Renew1108/apply')}>"
+				// }
+			];
+		
+		var price = document.getElementById("_n_price"),
+			tmoeny = document.getElementById("_t_money"),
+			priceOld = document.getElementById("_n_price_old"),
+			btnPay = document.getElementById("_btn_pay"),
+			dialog = document.getElementById("_dialog"),
+			btnDialog = document.getElementById("_btn_dialog");
+	
+		var gotoItem = function(index){
+			index = +index || 0;
+			var last = document.querySelector(".ui-scroll-indicator-item.ui-active");
+			if (last) {
+				last.classList.remove("ui-active");
+			}
+			var current = document.querySelectorAll(".ui-scroll-indicator-item")[index];
+			if (current) {
+				current.classList.add("ui-active");
+			}
+			_currentIndex = index;
+		};
+		
+		btnPay.addEventListener("click", function(){
+			//alert('同学莫急，今晚8点准时开抢！');
+			//return false;
+			document.getElementById("loading").style.display = "none";
+			document.getElementById("wrapper").style.display = "block";
+			location.href = _data[_currentIndex].link;
+		}, false);
+		
+		
+		window.onload = function(){
+			var start = parseInt('<{$template_id}>');
+			document.getElementById("loading").style.display = "none";
+			document.getElementById("wrapper").style.display = "block";
+			var flipsnap = Flipsnap(".ui-scroll", {});
+			setTimeout(function(){
+				flipsnap.moveToPoint(start);
+				gotoItem(start);
+			}, 500);
+			flipsnap.element.addEventListener('fstouchend', function(e) {
+				gotoItem(e.newPoint);
+			}, false);
+		}
+	</script>
+
+</html>

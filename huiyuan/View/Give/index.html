@@ -1,0 +1,195 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>电子购物卡赠送</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<link rel="stylesheet" href="__PUBLIC__/css/style.css">
+<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<link href="__PUBLIC__/layer/need/layer.css" rel="stylesheet" type="text/css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+    function msg(text) {
+        layer.open({
+            content: text,
+            style: 'background-color:#EA5824; color:#fff; border:none;text-align: center;' //自定风格
+                ,
+            time: 3
+        });
+    }
+
+    function loading() {
+        layer.open({
+            type: 2,
+            shadeClose:false,
+            content: '加载中'
+        });
+    }
+    </script>
+<style>
+body{position:relative;height:auto;padding-bottom:64px}.ui-cell-col>.ui-image{max-width:100px}.ui-fixed-bottom .ui-btn,.ui-fixed-bottom .ui-vip-price{box-sizing:border-box;width:50%;display:inline-block;float:left;height:50px}.ui-fixed-bottom .ui-vip-price{width:65%;padding-left:1em;line-height:50px}.ui-fixed-bottom .ui-btn{width:35%;border-radius:0}
+</style>
+
+<style media="screen">
+</style>
+</head>
+<body>
+<div id="gift-controller">
+	<div class="ui-cells">
+		<div class="ui-cell">
+			<div class="ui-cell-col">
+				<img src="__PUBLIC__/img/give.png" class="ui-image">
+			</div>
+			<div class="ui-cell-col ui-cell-primary">
+				<div class="ui-line-18">
+					联盛电子购物卡赠送好友
+				</div>
+				<div class="ui-grey ui-text-small ui-line-12">
+					可以将电子购物卡余额赠送给好友哟
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-section">
+		<div class="ui-card ui-card-plain">
+			<div class="ui-card-head ui-card-bar">
+				输入赠送金额
+			</div>
+		</div>
+		<div class="ui-cells">
+			<div class="ui-cell">
+				<label class="ui-cell-col">可用余额：</label><label for="gift-1" class="ui-cell-col ui-cell-primary ui-grey ui-text-small"><{$userinfo.p_ref_change_balance}>元</label>
+				
+			</div>
+			<div class="ui-cell">
+				<label class="ui-cell-col">赠送金额：&nbsp;<br/>
+				<!-- <label for="gift-1" class="ui-cell-col ui-cell-primary ui-grey ui-text-small">(<{$userinfo.p_ref_change_balance}>元)</label>: --></label>
+				<div class="ui-cell-col">
+					<input name="money" value="" id="money"  max="10"  placeholder="请输入赠送金额" type="number" class="ui-input">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-section">
+		<div class="ui-card ui-card-plain">
+			<div class="ui-card-head ui-card-bar">
+				填写赠言 &nbsp;&nbsp;&nbsp;&nbsp;
+				<select name="template_id" id="template_id" class="ui-cell-col">
+					<option value="">请选择祝福方式</option>
+					<option value="0">感谢悼念</option>
+					<option value="1">节日祝福</option>
+					<option value="2">生日祝福</option>
+				</select>
+			</div>
+		</div>
+		<div class="ui-cells">
+			<div class="ui-cell">
+				<div class="ui-cell-col">
+					受赠人:
+				</div>
+				<div class="ui-cell-col ui-cell-primary ui-grey">
+					<input type="text" id="toname" placeholder="受赠人姓名" class="ui-input">
+				</div>
+			</div>
+			<div class="ui-cell">
+				<div class="ui-cell-col ui-cell-primary">
+					<textarea rows="5" id="content" placeholder="一点心意，浓浓情义。" maxlength="100" class="ui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="ui-cell">
+				<div class="ui-cell-col">
+					署名:
+				</div>
+				<div class="ui-cell-col ui-cell-primary ui-grey">
+					<input type="text" id="fromname" placeholder="您的署名" class="ui-input">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-fixed-bottom ui-card">
+		<div class="ui-text-small ui-vip-price">
+			<span></span><span class="ui-yellow ui-text-large"></span> &nbsp;
+		</div> 
+		<button onclick ="choose('<{$userinfo.p_ref_change_balance}>');" class="ui-btn ui-yellow">选择卡片</button>
+	</div>
+</div>
+</body>
+<script>
+	
+	function choose (p_ref_change_balance) {
+		
+		var money  = ($("#money").val());
+		var toname = $("#toname").val();
+		var fromname = $("#fromname").val();
+		var template_id = $("#template_id").val();
+		if(money == '' || money == null || money == 0){
+			msg('请输入正确金额！');
+			return false;
+		}
+		if(money > 1000){
+
+			msg('最多赠送1000元');
+			return false;
+		}
+		var content = $("#content").val();
+		var p_ref_change_balance = parseFloat(p_ref_change_balance);
+
+		if(parseFloat(money) > p_ref_change_balance){
+			msg('请输入正确金额！');
+			return false;
+		}
+		if(template_id == '' || template_id == null){
+			msg('请选择祝福方式');
+			return false;
+		}
+		if(toname == '' || toname == null){
+
+			msg('请输入受赠人');
+			return false;
+		}
+		if(fromname == '' || fromname == null){
+
+			msg('请输入署名');
+			return false;
+		}
+
+		loading();
+        $.ajax({
+
+            type: 'post',
+            url: '<{:U('Give/creatGiveOrder')}>',
+            data: {
+
+                money: money,
+                template_id:template_id,
+                content: content,
+                toname:toname,
+                fromname:fromname
+
+            },
+            success: function(res) {
+                
+                if (res.status == 1) {
+                    window.location.href = "http://www.lianshengit.com/Sign/lqb/index.php/Home/Give/choose/out_trade_no/" + res.out_trade_no;
+                } else if (res.status == 0) {
+                    layer.closeAll();
+                    msg('创建订单出错，请重试');
+                    return false;
+                } else {
+                    layer.closeAll();
+                    msg('网络异常，请重试！');
+                    return false;
+                }
+
+            },
+            error: function(res) {
+                msg('网络错误,稍后再试！');
+                return false;
+            }
+
+        });
+	}
+
+</script>
+</html>

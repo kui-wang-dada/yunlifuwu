@@ -1,0 +1,42 @@
+<include file="header" />
+<style>
+    html,body{height:100%;}
+</style>
+<body>
+
+<div id="wrap" class="wrap_4">
+    <header class="mint-header is-fixed">
+        <span class="mint-button-icon">
+            <i class="mintui mintui-back"></i>
+        </span>
+        <h1 class="mint-header-title">会员合作购</h1>
+    </header>
+    <div class="content_4">
+        <volist name="lists" id="vo">
+            <div class="list">
+                <div class="container_4 clear">
+                    <div class="title_4">
+                        <h4><{$vo.name}>协议</h4>
+                        <p>NO:<{$vo.number}></p>
+                    </div>
+                    <notempty name="vo.status_str">
+                        <span><p><{$vo.status_str}></p></span>
+                    </notempty>
+                    
+                </div>
+                <ul>
+                    <li>支付保证金金额：<span><{$vo.deposit}>元</span></li>
+                    <li>赠送返利券金额：<span><{$vo.vouchers}>元</span></li>
+                    <li>协议许消费金额：<span><{$vo.amount}>元</span></li>
+                </ul>
+                <p>协议有效期限 <{$vo.start_time|date='Y-m-d',###}> 至 <{$vo.end_time|date='Y-m-d',###}></p>
+            </div>
+        </volist>
+    </div>
+
+
+
+</div>
+
+</body>
+<include file="footer" />

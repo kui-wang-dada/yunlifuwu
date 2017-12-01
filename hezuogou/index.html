@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/mui.css">
+    <link rel="stylesheet" href="css/number_style.css">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+
+    <div id="header" class="header clear">
+        <header class="mint-header is-fixed">
+            <div class="mint-header-button is-left">
+                <a href="#/" class="mui-active">
+                    <button class="mint-button mint-button--default mint-button--normal">
+                    <span class="mint-button-icon">
+                        <i class="mintui mintui-back"></i>
+                    </span>
+                        <label class="mint-button-text"></label>
+                    </button>
+                </a>
+            </div>
+            <h1 class="mint-header-title">会员合作购</h1>
+            <div class="mint-header-button is-right">
+                <button class="mint-button mint-button--default mint-button--normal">
+                <span class="mint-button-icon">
+                    <img src="img/13.png" alt="" class="my_xieyi">
+                    <label class="mint-button-text">我的协议</label>
+                </span>
+                    <label class="mint-button-text"></label>
+                </button>
+            </div>
+        </header>
+        <div class="jindu jindu_1">
+            <div class="part_y  fl">
+                <div><p>1</p></div>
+                <div>选择套餐</div>
+            </div>
+            <div class="part_x  fl"></div>
+            <div class="part_y  fl">
+                <div><p>2</p></div>
+                <div>实名认证</div>
+            </div>
+            <div class="part_x fl"></div>
+            <div class="part_y fl">
+                <div><p>3</p></div>
+                <div>完成支付</div>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="nav" class="header clear">
+        <ul class="nav_1 clear" id="nav_1">
+            <li><div class="bg1">普通会员</div></li>
+            <li><div class="bg2">贵宾会员</div></li>
+            <li><div class="bg3">金卡会员</div></li>
+            <li><div class="bg4">铂金会员</div></li>
+            <li><div class="bg5">钻石会员</div></li>
+        </ul>
+    </div>
+    <div class="message clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">赠送电子返利券金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span v-text="money_jiben.money0_1"></span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">需支付的保证金金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span v-text="money_jiben.money0_2"></span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">协议期限</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{xieyi_time}}年</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">生效日期</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{shengxiao_time}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    </div>
+    <div class="message clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">赠送电子返利券金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money1_1}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">需支付的保证金金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money1_2}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">协议期限</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{xieyi_time}}年</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">生效日期</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{shengxiao_time}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    </div>
+    <div class="message clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">赠送电子返利券金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money2_1}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">需支付的保证金金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money2_2}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">协议期限</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{xieyi_time}}年</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">生效日期</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{shengxiao_time}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    </div>
+    <div class="message clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">赠送电子返利券金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money3_1}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">需支付的保证金金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money3_2}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">协议期限</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{xieyi_time}}年</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">生效日期</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{shengxiao_time}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    </div>
+    <div class="message clear">
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">赠送电子返利券金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money4_1}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">需支付的保证金金额</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>￥{{money_jiben.money4_2}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">协议期限</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{xieyi_time}}年</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+        <a class="msg-cell"><!---->
+            <div class="msg-cell-left"></div>
+            <div class="msg-cell-wrapper">
+                <div class="msg-cell-title"><!---->
+                    <span class="msg-cell-text">生效日期</span> <!---->
+                </div>
+                <div class="msg-cell-value"><span>{{shengxiao_time}}</span></div>
+            </div>
+            <div class="msg-cell-right"></div> <!---->
+        </a>
+    </div>
+    <div class="title">
+        <p>权利与义务</p>
+    </div>
+    <div id="content_quan" class="content_quan clear">
+        <ul>
+            <li>1.会员签署《联盛会员合作购协议》，协议生效后，一次性获赠电子返利券
+                <span class="money_1">{{money_jiben.money0_1}}</span>
+                <span class="money_1">{{money_jiben.money1_1}}</span>
+                <span class="money_1">{{money_jiben.money2_1}}</span>
+                <span class="money_1">{{money_jiben.money3_1}}</span>
+                <span class="money_1">{{money_jiben.money4_1}}</span>元。
+            </li>
+            <li>2.会员需缴纳保证金
+                <span class="money_2">{{money_jiben.money0_2}}</span>
+                <span class="money_2">{{money_jiben.money1_2}}</span>
+                <span class="money_2">{{money_jiben.money2_2}}</span>
+                <span class="money_2">{{money_jiben.money3_2}}</span>
+                <span class="money_2">{{money_jiben.money4_2}}</span>元，协议期满可退，不可提前终止。</li>
+            <li>3.协议期间，会员需承诺在联盛集团旗下门店消费累计金额不低于
+                <span class="money_3">{{money_jiben.money0_3}}</span>
+                <span class="money_3">{{money_jiben.money1_3}}</span>
+                <span class="money_3">{{money_jiben.money2_3}}</span>
+                <span class="money_3">{{money_jiben.money3_3}}</span>
+                <span class="money_3">{{money_jiben.money4_3}}</span>元</li>
+            <li>4.协议期间，会员需承诺每周通过微信朋友圈免费对联盛集团进行不少于<span>{{xuanchuan}}</span>次的正面宣传，且发送不得设定朋友圈查看限制</li>
+            <li>5.协议期间，如签约会员未达成上述第3条款约束条件，则在签约会员保证金内扣除所约定为完成的消费金额，锁扣部分最高不超过赠送该会员的电子返利券金额</li>
+            <li>6.协议期间，如签约会员未达成上述第4条款约束条件，经查实后，需补足微信朋友圈对联盛集团的有效宣传次数，方能退回保证金</li>
+            <li>7.会员可选择比自身当前会员等级高的套餐签约，且会员等级自协议生效之日自动调整为所购买套餐对应的会员等级，并销售该会员等级权益。</li>
+
+        </ul>
+    </div>
+    <div class="title">
+        <p>协议期满保证金说明</p>
+    </div>
+    <div id="content_xie">
+        <ul>
+            <li>1.协议期满，方可退保证金，不可提前终止</li>
+            <li>2.协议期满，需携带办理时的电子凭证及身份证原件至以下地点办理保证金退回业务：<span>联盛广场贵宾厅、九江快乐城贵宾厅、奥特莱斯贵宾厅瑞昌贵宾厅、修水贵宾厅、湖口店客服台、武宁店客服台、共青店客服台、星子店客服台、永修店客服台、沙河店客服台办理。</span>
+            </li>
+        </ul>
+    </div>
+    <div class="choose">
+        <div class="checkbox">
+
+            <span><input type="checkbox"></span>
+            <p>我已同意并接受<a href="">《联盛会员合作购业务办理须知》</a><br>
+                <a href="">《联盛会员合作购协议》</a>的全部内容</p>
+
+        </div>
+
+    </div>
+    <div id="footer" class="footer_1">
+        <div class="footer_msg">
+            <p>应支付的保证金：<b>&yen;</b>
+                <span class="money_4">{{money_jiben.money0_2}}</span>
+                <span class="money_4">{{money_jiben.money1_2}}</span>
+                <span class="money_4">{{money_jiben.money2_2}}</span>
+                <span class="money_4">{{money_jiben.money3_2}}</span>
+                <span class="money_4">{{money_jiben.money4_2}}</span></p>
+        </div>
+
+        <input type="button" value="立即签约">
+
+    </div>
+</div>
+
+
+</body>
+<script src="js/base.js"></script>
+<script src="js/vue.js"></script>
+<script src="layer/layer.js"></script>
+</html>

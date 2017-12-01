@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection"/>
+    <link href="Public/css/base.css?t=1" rel="stylesheet" type="text/css">
+    <link href="Public/css/common.css?t=2" rel="stylesheet" type="text/css">
+    <link href="Public/css/me.css?t=3" rel="stylesheet" type="text/css">
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js?t=1"></script>
+    <link href="Public/layer/need/layer.css?t=1" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="base.css">
+    <script src="Public/layer/layer.js?t=1"></script>
+    <title>我的电子购物卡</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header_tips">
+            <div class="fl"> </div>
+            <div class="icon_false fr" onclick="icon_false();"></div>
+            <div class="swrap fr">
+                <div class=" huaban">
+                    <div class="huaban_list">电子购物卡买1000送100</div>
+                    <div class="huaban_list">电子购物卡买1000送100</div>
+                    <div class="huaban_list">电子购物卡买1000送100</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="header_content">
+            <div class="content">
+                <p class="p1">电子购物卡余额(元)</p>
+                <p class="p2">10000</p>
+            </div>
+        </div>
+        <div class="header_message">
+            <div>
+                <p>昨日收益(元)</p>
+                <p>1000</p>
+            </div>
+            <div>
+                <p>总累计收益(元)</p>
+                <p>1000</p>
+            </div>
+            <div>
+                <p>万份收益(元)</p>
+                <p>1000</p>
+            </div>
+        </div>
+    </div>
+    <div class="phone">
+        <input type="text" placeholder="请输入号码">
+        <span></span>
+    </div>
+    <div class="message">
+        <p>姓名：<span>王逵</span></p>
+        <p>卡号：<span>******321341</span></p>
+    </div>
+    <div class="money">
+        <ul id="ul">
+
+            <li onclick="checkPay($(this));">
+                <a>
+                    20
+
+                </a>
+            </li>
+            <li onclick="checkPay($(this));">
+                <a>
+                    50
+
+                </a>
+            </li>
+            <li onclick="checkPay($(this));">
+                <a>100</a>
+            </li>
+            <li onclick="checkPay($(this));">
+                <a>
+                   200
+
+                </a>
+            </li>
+            <li onclick="checkPay($(this));">
+                <a>
+                    500
+
+                </a>
+            </li>
+
+            <li onclick="checkPay($(this));" class="pay_input">
+                <input type="text" placeholder="输入其他金额">
+            </li>
+            </li>
+        </ul>
+
+    </div>
+    <div class="button_tap">
+        <a onclick="pay()" class="tap_use" >立即充值</a>
+        <a href="zhuanzeng.html" class="tap_give">转赠好友</a>
+    </div>
+    <div class="footer">
+        <a  href="index.html"class="active">
+        <span class="normal_1"></span>
+        <span>充值</span>
+        </a>
+        <a href="mingxi.html" >
+        <span class="normal_2"></span>
+        <span>明细</span></a>
+        <a href="erweima.html" >
+        <span class="normal_3"></span>
+        <span>付款</span></a>
+    </div>
+</div>
+</div>
+
+</body>
+<script>
+    //获取用户输入号码用户
+    $(function () {
+        if ($(".pay_input input").val()) {
+            $(".tap_use").addClass("active");
+            if ($(".pay_input input").val() >= 20000) {
+                msg("充值金额不能超过2万元哦！")
+            }
+        } else {
+            $(".tap_use").removeClass("active");
+        }
+    })
+    $(".phone input").blur(function () {
+        var phone_number = $(".phone input").val()
+        $.ajax({
+            url: "<{:U('Dc/checkuser')}>",
+            type: "POST",
+            data: {phoneNumber: phone_number},
+            success: function (res) {
+                console.log(res);
+                if (res.status == 1) {
+                    $(".message .msg_name").html('姓名：<span>' + res.p_ref_name + '</span>');
+                    $(".message .msg_number").html('姓名：<span>' + res.p_ref_cardno + '</span>');
+                } else {
+                    //$(".message").html("<h3></h3>");
+                    $(".message .msg_name").html('该用户不存在或手机号错误，请确认!');
+                    $(".message .msg_number").html('');
+                }
+
+            }
+        });
+    })
+    $(".money input").keyup(function () {
+        if ($(this).val()) {
+            $(".tap_use").addClass("active");
+            if ($(this).val() >= 20000) {
+                msg("充值金额不能超过2万元哦！")
+            }
+        } else {
+            $(".tap_use").removeClass("active");
+        }
+
+    })
+
+    function checkPay(obj) {
+        var $this = obj;
+        $('#ul li').removeClass('active');
+        $this.addClass('active');
+        $(".tap_use").addClass("active");
+        if (!($('.pay_input').hasClass('active')) && $('.pay_input input').val() != '') {
+            $('.pay_input input').attr('style', 'color:#666;font-weight:bold');
+        }
+    }
+
+    $('.pay_input input').focus(function () {
+        $(this).attr('placeholder', '');
+        $(this).attr('style', 'font-weight:bold');
+    })
+    $('.pay_input input').blur(function () {
+        var value = $(this).val();
+        if (value == '' || value == null || value == 0) {
+            $(this).attr('placeholder', '输入其他金额');
+            $(this).attr('style', '');
+            $('.pay_input').removeClass('active');
+        }
+
+
+    })
+
+    function icon_false() {
+        $('.header_tips').hide();
+    }
+
+    function msg(text) {
+        layer.open({
+            type: 0,
+            content: text,
+            style: 'background-color:rgba(0,0,0,0.6); color:#fff; border:none;text-align: center;' //自定风格
+            ,
+            area: ["200px", "50px"],
+            time: 3
+        });
+    }
+
+    function loading() {
+        layer.open({
+            type: 2,
+            content: '加载中'
+        });
+    }
+
+    function pay() {
+        var amount = '';
+        var pay_input = $(".pay_input input").val();
+        console.log(pay_input)
+        if (pay_input != '') {
+            if (pay_input == '' || pay_input == null) {
+                msg('请输入充值金额');
+                return false;
+            }
+            var a = /^[0-9]*(\.[0-9]{1,2})?$/;
+            if (!a.test(pay_input)) {
+                msg("格式不正确");
+                return false;
+            }
+            if (pay_input < 20) {
+                msg("充值金额不能小于20");
+                return false;
+            }
+            if (pay_input > 20000) {
+                msg("充值金额不能大于20000");
+                return false;
+            }
+            amount = pay_input;
+
+            if (amount > 1000) {   //充值金额大于1000时提示确认
+
+                layer.open({
+                    content: '您的充值金额大于1000，确认是否充值'
+                    , btn: ['充值', '取消']
+                    , yes: function (index) {
+                        paycheck(amount);
+                        layer.close(index);
+                    }
+                });
+            } else {
+                paycheck(amount);
+            }
+
+        }
+
+    }
+
+
+    function paycheck(amount) {
+
+        loading();
+        window.location.href = "pay.html";
+        // $.ajax({
+        //
+        //     type: 'post',
+        //     url: "<{:U('Coinpurse/createOrder')}>",
+        //     data: {
+        //
+        //         amount: amount
+        //
+        //     },
+        //     success: function(res) {
+        //         if (res.status == 1) {
+        //             window.location.href = "http://www.lianshengit.com/Sign/lqb/index.php/Home/Pay/index/orderid/" + res.orderid;
+        //         } else if (res.status == 0) {
+        //             msg('创建订单出错，请重试');
+        //             return false;
+        //         } else if(res.status == 2){
+        //             msg('充值金额不能大于20000');
+        //             return false;
+        //         } else if(res.status == 3){
+        //             msg('充值金额不能小于20');
+        //             return false;
+        //         }
+        //
+        //     },
+        //     error: function(res) {
+        //
+        //         msg('网络错误,稍后再试！');
+        //     }
+        //
+        // });
+    }
+
+</script>
+</html>
