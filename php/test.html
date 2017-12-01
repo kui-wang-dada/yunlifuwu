@@ -1,0 +1,22 @@
+<script>
+    $(".addAward_btn").click(function(e){
+        var award_type=$(this).parents("sort_for").attr("data-type");
+        var award_number=$(this).parents("sort_for").find("#number").val()
+        $(".btn-next").click(function(){
+            var award=$(".active_li").attr("data-id");
+            var data={
+                type:award_type,
+                number:award_number,
+                award:award,
+            }
+            var link="/index.php?"
+            $.post(link,data)
+            var hm=$(".active_li").html();
+            if(award_type==1){
+                $(".sort_for[data-type=1]").find(".btn_area").hide();
+                $(".sort_for[data-type=1]").find(".blank").html(hm);
+            }
+        })
+    })
+
+</script>
