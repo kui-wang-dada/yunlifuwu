@@ -1,0 +1,21 @@
+page{
+  background-color: #F6F6F6;
+}
+.title{
+	padding:10px 10px 5px 10px;
+  font-family: "黑体";
+}
+.content{
+	font-size:14px;
+	padding:0px 10px 10px 10px;
+	color:#666666;
+}
+.img{
+	width:100%;
+	height:100%;
+}
+.img image{
+    display:block;
+	width:100%;
+	height:130px;
+}

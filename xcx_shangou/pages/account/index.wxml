@@ -1,0 +1,53 @@
+<view class="container">
+  <view class="top-view"></view>
+   <view class="account-title">
+    <image src="../../images/shop.png" class="title-image margin-left"></image>
+    <text class="margin-left">{{storeName}}</text>
+    <view class="title-left">
+      <text>共{{goodsNum}}件</text>
+    </view>
+  </view>  
+
+  <view class="center">
+  <view style="text-align:center;font-size:16px;height:30px;line-height:30px;">所购商品</view>
+    <view class="item-view" wx:for="{{listInfo}}" wx:key="{{index}}">
+      <view class="list">
+        <text class="goods clothes">{{item.name}}</text>
+        <text class="count">x{{item.quantity}}</text>
+        <text class="totle">￥{{item.receivable}}</text>
+      </view>
+    </view>
+    <view style="height:20px;width:100%"></view>
+    <!-- <view class="discount-view">
+      <view class="discount-content">
+        <text class="discount-left">左侧描述</text>
+        <text class="discount-right">右侧描述</text>
+      </view>
+      <view class="discount-content">
+        <text class="discount-left">左侧描述</text>
+        <text class="discount-right">右侧描述</text>
+      </view>
+      <view class="discount-content">
+        <text class="discount-left">左侧描述</text>
+        <text class="discount-right">右侧描述</text>
+      </view>
+    </view> -->
+     <!-- <view class="weui-cells weui-cells_after-title">
+      <view bindtap="chooseCard" class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">卡券</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">
+          <text style="color:red">{{cardInfo}}</text>
+        </view>
+      </view>
+    </view>    -->
+  </view>
+  <view class="bottomView">
+    <view class="totalPrice-view common-center">
+      <text style="font-size: 16px;margin-right:10px">合计:</text>
+      <text style="color:	#FF4500">￥{{goodsPrice}}</text>
+    </view>
+    <view class="submit-view common-center" bindtap="createOrder">
+      <text>提交订单</text>
+    </view>
+  </view>
+</view>

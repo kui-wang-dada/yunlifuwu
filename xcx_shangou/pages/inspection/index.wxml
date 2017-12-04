@@ -1,0 +1,27 @@
+<view class="page">
+  <view class="container"> 
+    <view class="page__bd">
+      <view class="weui-panel weui-panel_access" id="dotted">
+        <view class="weui-panel__bd">
+          <!-- <view class="weui-media-box__title title">
+            <image src="../../images/more.png"></image>
+          </view> -->
+          <!-- <view class="weui-media-box__title">待核检</view> -->
+          <view class="message">请前往<text class="color_r">"自购专属通道"</text>，使用此二维码核检此订单，并向核检员出示商品，谢谢！
+          </view>
+          <view class="barcode_new">
+            <view class="barnum">{{validateCode}}</view>
+            <canvas canvas-id="barcode" style='left:12%;'/>
+          </view>
+          <view class="message card">订单核检码</view>
+          <view class="message color_b"><text class="weight_b">温馨提示：</text>订单核检码可在"<text class="color_r">我的</text>"订单中查看</view>
+          <view class="showView"><text>核检时请确保核检员在您身边</text></view>        
+        </view>
+      </view>
+    </view>
+    <view class="page__bd page__bd_spacing">
+      <button class="weui-btn" bindtap="payDetail" style='background-color:#ffa825'>查看订单</button>
+      <!-- <button class="weui-btn" bindtap="hejian" type="default">核检</button>  -->
+    </view>  
+  </view>
+</view>

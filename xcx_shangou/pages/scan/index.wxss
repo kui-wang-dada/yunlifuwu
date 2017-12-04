@@ -1,0 +1,172 @@
+/* pages/scan/index.wxss */
+.searhBar {
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+}
+
+.searchBar-left {
+  width: 15%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.searchBar-leftImage {
+  width: 33px;
+  height: 33px;
+}
+
+.searchBar-center {
+  /* width: 60%; */
+  height: 50px;  
+}
+
+.searchBar-right {
+  width: 25%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scanView {
+  width: 100%;
+  height: 50%;
+  border-top: 8px solid #F5F5F5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailView {
+  width: 90%;
+  margin: 5%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailTitle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailView text {
+  font-size: 32rpx;
+}
+
+.detailTop {
+  display: flex;
+  flex-direction: row;
+}
+
+.scanButton {
+  display: flex;
+  /*width: 40%;*/
+  /*height: 44px;*/
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  /*background-color: #ffa825;*/
+}
+
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 540rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 40%;
+  left: 0;
+  z-index: 9999;
+  background: #f9f9f9;
+  margin: -180rpx 105rpx;
+  border-radius: 15rpx;
+}
+
+.modal-title {
+  padding-top: 50rpx;
+  font-size: 40rpx;
+  color: #030303;
+  text-align: center;
+}
+
+.modal-content {
+  padding: 15rpx 8rpx;
+}
+
+.center-name {
+  font-size: 30rpx;
+}
+
+.centerView-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 20rpx;
+}
+
+.num-button {
+  width: 75rpx;
+  height:75rpx;
+  border: 1px solid #8a8a8a;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.num-center {
+  width: 100rpx;
+  height:75rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #8a8a8a;
+  border-bottom: 1px solid #8a8a8a;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 86rpx;
+  border-top: 1px solid #dedede;
+  font-size: 34rpx;
+  line-height: 86rpx;
+}
+
+.btn-cancel {
+  width: 50%;
+  color: #FFa825;
+  text-align: center;
+}
+
+.btn-confirm {
+  width: 50%;
+  color: gray;
+  text-align: center;
+  border-right: 1px solid #dedede;
+}

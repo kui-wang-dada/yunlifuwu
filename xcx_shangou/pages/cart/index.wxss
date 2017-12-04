@@ -1,0 +1,395 @@
+/*mask*/
+.drawer_screen { 
+ width: 100%; 
+ height: 100%; 
+ position: fixed; 
+ top: 0; 
+ left: 0; 
+ z-index: 9001; 
+ background: #000; 
+ opacity: 0.5; 
+ overflow: hidden; 
+} 
+  
+/*content*/
+.drawer_box { 
+ width: 89%; 
+ overflow: hidden; 
+ position: fixed; 
+ top: 50%; 
+ left: -1%; 
+ z-index: 9011; 
+ background: #FAFAFA; 
+ margin: -150px 50rpx 0 50rpx; 
+ border-radius: 3px; 
+} 
+.drawer_title{ 
+ padding:15px; 
+ font: 20px "microsoft yahei"; 
+ text-align: center; 
+} 
+/* 一种购物袋样式 */
+/* 只有两种购物袋样式 */
+.baginfoone{
+   float: left;
+   width: 100%;
+   height: 168px;
+}
+.baginfoone img{
+   position: relative;
+   top: 10px;
+   left: 20px;
+}
+/* 只有两种购物袋样式 */
+.drawer_content { 
+ height: 172px; 
+ overflow-y: scroll; /*超出父盒子高度可滚动*/
+} 
+.baginfo{
+   float: left;
+   width: 50%;
+   height: 168px;
+}
+.baginfo img{
+   position: relative;
+   top: 10px;
+   left: 20px;
+}
+.moneyone{
+   font: 20px "microsoft yahei"; 
+   font-size: 16px;
+   color: #808080;
+   text-align: center;
+   position: relative;
+}
+/* 三种购物袋样式 */
+.drawer_contenttwo { 
+ height: 172px; 
+ overflow-y: scroll; /*超出父盒子高度可滚动*/
+}
+.baginfotwo{
+   float: left;
+   width: 33%;
+   height: 168px;
+}
+.baginfotwo img{
+   position: relative;
+   top: 10px;
+   left: 20px;
+}
+.moneyonetwo{
+   font: 20px "microsoft yahei"; 
+   font-size: 16px;
+   color: #808080;
+   text-align: center;
+   position: relative;
+  
+}
+/*以上 三种购物袋样式 */
+.btn_ok{ 
+display: inline-block;
+width: 50%;
+padding-top: 10px;
+padding-bottom: 10px;
+ font: 20px "microsoft yahei"; 
+ text-align: center; 
+ border-top: 1px solid #E8E8EA; 
+ color: #999;
+}  
+/*以上是 购物袋弹出框 */
+
+.topView {
+  width: 100%;
+  height: 18%;
+  display: flex;
+  flex-direction: row;
+   align-items: flex-end; 
+  justify-content: space-around;
+  background-color: #fff;
+}
+
+.topView-item {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+   justify-content: center; 
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.bag-sel {
+  border: 1px solid #1296db;
+}
+
+.bag-com {
+  border: 1px solid #EBEBEB;
+}
+
+.blankView {
+  width: 100%;
+  height: 89%;
+  background-color: #FFFFFF;
+  flex-direction: column;
+}
+
+.title-view {
+  width: 100%;
+  height: 11%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+}
+
+.content-view {
+  width: 100%;
+  height: 47%;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.blank-itemView {
+  width: 24%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.blank-centerView {
+  width: 10%;
+  height: 100%;
+}
+
+.blank-itemView-image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  margin-bottom: 20rpx;
+  background-color: #F5F5F5;
+}
+
+.listView {
+  width: 100%;
+  margin-top: 8%;
+  margin-bottom: 17%;
+}
+
+.list-item {
+  width: 100%;
+  display: flex;
+
+  background-color: #FFFFFF;
+  overflow: hidden;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.content {
+ width: 100%;
+ height: 100%;
+ display: flex;
+ flex-direction: row;
+ margin-right:0;
+ -webkit-transition: all 0.4s;
+ transition: all 0.4s;
+ -webkit-transform: translateX(70px); 
+ transform: translateX(70px); 
+ margin-left: -70px
+}
+
+.check-box {
+  width: 14%;
+  height: 100%;
+}
+
+.item-content {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.content-left {
+  width: 63%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.content-right {
+  width: 37%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-right: 10px;
+}
+
+.centerView-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 20rpx;
+  margin-right: 0;
+}
+/* 
+.num-button {
+  width: 60rpx;
+  height:60rpx;
+  border: 1px solid #EBEBEB;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+.num-button text{
+  font-weight: bold;
+  color: #000;
+} */
+.num-center {
+  width: 33%;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border-top: 1px solid #EBEBEB; */
+  /* border-bottom: 1px solid #EBEBEB; */
+}
+.num-input {
+  text-align: center;
+}
+.num-center text{
+  font-family: "黑体";
+  color:#000;
+  font-size: 16px;
+}
+.bottomView {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 9%;
+  z-index: 9000;
+  background-color: #FFFFFF;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice-view {
+  margin-left: 20px;
+  flex-direction: row;
+}
+
+.submit-view {
+  height: 100%;
+  width: 25%;
+  position: absolute;
+  right: 0;
+  background-color: #ffa825;
+}
+
+.del {
+ background-color:#ffa825;
+ width: 70px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ color: #fff;
+ -webkit-transform: translateX(70px);
+ transform: translateX(70px);
+ -webkit-transition: all 0.4s;
+ transition: all 0.4s;
+}
+.touch-move-active .content,
+.touch-move-active .del {
+ -webkit-transform: translateX(0);
+ transform: translateX(0);
+}
+.submit-view text {
+  color:#fff;
+  font-size: 16px;
+}
+.content-left text {
+  font-family: "黑体";
+  font-size: 16px;
+}
+.money{
+  font-size:16px;
+  color:#FF4500;
+  font-family: "黑体";
+  margin-right: 18rpx;
+}
+.common-text {
+  font-size: 28rpx;
+  color:#000;
+  text-align: center;
+}
+.common-center text{
+  text-align: center;
+}
+.title-view text{
+  font-size: 16px;
+  font-family:"黑体";
+}
+
+.kong {
+  height: 1px;
+  width: 1px;
+}
+
+.hu {
+  height: 18px;
+  width: 80px;
+}
+
+.hu-view {
+  width: 30%;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hu-top {
+  width: 100%;
+  height: 18px;
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+.name_text{
+		display: -webkit-box;  /*将对象作为弹性盒子模型显示*/
+		overflow: hidden; /**/
+		text-overflow:ellipsis;
+		word-break:break-all;
+		-webkit-box-orient:vertical;/*伸缩盒对象的子元素的排列方式-垂直*/
+		-webkit-line-clamp:2; /*限制在一个块级元素显示的文本的行数*/
+	}
+
+.price_text{
+  display: flex;
+  flex-direction: row;
+}
+.hua_xian {
+  text-decoration: line-through;
+}
+
+.chooseItem {
+  width: 33%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnView {
+  width: 55rpx;
+  height: 55rpx;
+}

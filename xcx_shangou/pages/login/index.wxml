@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="userinfo">
+    <image class="userinfo-avatar" src="../../images/cry.png" background-size="cover"></image>
+    <button bindtap="setting" class="weui-btn mini-btn" type="primary" size="mini" style="background-color:#1296db">设置</button>
+  </view>
+  
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="{{helpCenter}}" class="weui-cell weui-cell_access margin-top" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">帮助中心</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+</view>

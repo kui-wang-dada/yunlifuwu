@@ -1,0 +1,165 @@
+.swiper-container{
+ position: relative;
+}
+.swiper-container .swiper{
+ height: 100rpx;
+}
+.swiper-container .swiper .img{
+ width: 90%;
+ height: 100%;
+ margin-left: 5%;
+ margin-top: 2%;
+}
+.swiper-container .dots{
+ position: absolute;
+ left: 0;
+ right: 0;
+ bottom: 20rpx;
+ display: flex;
+ justify-content: center;
+}
+.swiper-container .dots .dot{
+ margin: 0 8rpx;
+ width: 14rpx;
+ height: 14rpx;
+ background: #fff;
+ border-radius: 8rpx;
+ transition: all .6s;
+}
+.swiper-container .dots .dot.active{
+ width: 24rpx;
+ background: #1296db;
+}
+
+.center {
+  width: 90%;
+  margin:2% 5% 0 5%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.item-view {
+  /* width: 90%; */
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2px dotted #dedede;
+  margin:0 15px; 
+  padding:5rpx 15rpx;
+  line-height:30px;
+}
+.list{
+  width: 100%;
+  display: flex;
+  
+}
+.list text{
+  font-family: "黑体";
+  font-size:14px;
+  display: block;
+  float:left;
+}
+.goods{
+  width:100%;
+  text-align:left;
+}
+.goods text{
+  font-family: "黑体";
+  font-size:14px;
+  display: block;
+  float:left;
+}
+.count{
+  width:100%;
+  color:#8a8a8a;
+  text-align:center;
+  border:1px solid #ddd;
+  height:20px;
+  line-height:20px;
+  border-radius:50px;
+  margin-top:4px;
+}
+.totle{
+  width:100%;
+  /* color:#FF4500; */
+  text-align:right;
+}
+.line-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-new {
+  width: 100%;
+}
+
+.total-info {
+  
+}
+.xian{
+  border-bottom:1px solid #d9d9d9;
+}
+.total-info text{
+  font-family: "黑体";
+  font-size:14px;
+  display: block;
+  float:left;
+}
+.total-detai {
+  width: 100%
+}
+.bottomView {
+  height: 50px;
+  flex-direction: row;
+  display: flex;
+  background-color: #F5F5F5;
+  margin: 0 15px 0 15px; 
+}
+.bottom-left {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bottom-total {
+  width: 100%;
+  height: 100px;
+  flex-direction: column;
+  position: relative;
+}
+.bottom-leftTop {
+  width: 50%;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  flex-direction: row;
+}
+.weuiCell {
+  flex-direction: row;
+  display: flex;
+  margin: 0 15px 0 15px;
+}
+.daizi {
+  font-family: "黑体";
+  font-size:18px;
+  display: block;
+  float:left;
+  font-weight: bolder
+}
+.check {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 38%;
+  top: 15%;
+  width: 150rpx;
+  height: 150rpx;
+  background-color: lightblue;
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index:3;
+}

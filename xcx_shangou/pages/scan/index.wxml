@@ -1,0 +1,89 @@
+<view class="container" xmlns:wx="">
+  <view class="searhBar">
+    <view class="searchBar-left">
+      <image src="../../images/write.png" class="searchBar-leftImage"></image>
+    </view>
+    <view style="width:60%">
+      <input bindinput="bindSeachBar" class="searchBar-center" placeholder="请输入商品条形码" value="{{inputValue}}" />
+    </view>
+    <view class="searchBar-right" bindtap="clickToSearch">
+      <button class="weui-btn mini-btn" type="default" size="mini" style="background:#ffa825;color:#fff;">查找
+      </button>
+    </view>
+  </view>
+
+  <view class="scanView">
+    <!--<text>您可以手动输入条码,或者扫描商品条码</text>-->
+    <view class="scanButton" bindtap="scan">
+      <!--<text style="color:#FFFFFF">扫一扫</text>-->
+        <image src="/images/scan_w_03.png" alt="" style="width:120px;height:120px;" />
+    </view>
+  </view> 
+
+  <!-- <view wx:if="{{show}}" class="detailView">
+    <view class="detailTop">
+      <text style="width:36%;margin-left:2%;">种类: {{totalType}}</text>
+      <text style="width:30%;">件数: {{totalNum}}</text>
+      <text style="width:30%;text-align: right">折扣: ¥{{totalAllowance}}</text>
+    </view>
+    <view class="detailTop">
+      <text style="width:36%;margin-left:2%;">折前: ¥{{totalPrice}}</text>
+      <text style="width:62%;">折后: ¥{{totalReceivable}}</text>
+    </view>
+  </view> -->
+
+  <!-- <view wx:if="{{show}}" class="detailView"  style="margin-top: 5%">
+    <view class="detailTitle"><text style="text-align: center">{{showData.goods.name}}</text></view>
+    <view wx:if="{{showAllowance}}" class="detailTop">
+      <text style="width:47%;margin-left:3%;text-align: center">单价: ¥{{showData.goods.lsj}}</text>
+      <text style="width:47%;text-align: center">数量: {{showData.quantity}}</text> 
+    </view>
+    <view wx:else class="detailTop">
+      <text style="width:33%;margin-left:3%;text-align: center">原价: ¥{{showData.goods.lsj}}</text>
+      <text style="width:33%;text-align: center">折扣价: {{showData.receivable}}</text>
+      <text style="width:33%;text-align: center">数量: {{showData.quantity}}</text>  
+    </view>
+  </view>  -->
+</view>
+
+<!--弹窗-->
+<view bindtap="onCancel" class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-title">扫描成功</view>
+  <view class="modal-content">
+    <view class="centerView-price">
+      <text class="center-name" style="text-align: center;">{{currentGoods.goods.name}}</text>
+    </view>
+    <!-- <view class="centerView-price">
+      <text style="font-size:28rpx;color:#8a8a8a">售价：</text>
+      <text style="font-size:34rpx;color:#FF4500">¥{{currentGoods.amount}}</text>
+    </view> -->
+    <view class="centerView-price">
+      <text style="font-size:28rpx;color:#8a8a8a">售价：</text>
+      <block wx:if="{{currentGoods.allowance > 0}}">
+        <text style="font-size:34rpx;color:#000000;text-decoration: line-through;">¥{{currentGoods.amount}}</text>
+        <text style="font-size:34rpx;color:#FFa825;margin-left:6rpx">¥{{currentGoods.receivable}}</text>
+      </block>
+      <block wx:else>
+        <text style="font-size:34rpx;color:#FFa825">¥{{currentGoods.amount}}</text>
+      </block>
+    </view>
+    <view class="centerView-price">
+      <block wx:if="{{isNum == 'N'}}">
+        <view class="num-button" bindtap="goodsNum" data-index="0">
+          <text>-</text>
+        </view>
+        <view class="num-center">
+          <text>{{goodsNum}}</text>
+        </view>
+        <view class="num-button" bindtap="goodsNum" data-index="1">
+          <text>+</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-confirm" bindtap="onNext" data-status="confirm">取消</view>
+    <view class="btn-cancel" bindtap="onConfirm" data-status="cancel">加入购物车</view>
+  </view>
+</view>

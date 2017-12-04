@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="kong"></view>
+  <view class="weui-cells weui-cells_after-title" style="width:90%;margin-left:5%">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label" style="width:75px">会员卡号</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input maxlength="11" type="number" bindinput="bindVipCard" value="{{cardno}}" class="weui-input" placeholder="请输入会员卡号"/>
+      </view>
+    </view>
+  </view>
+  <button bindtap="button" style="width:90%;background-color:#FFAE2E;border-color: #FFAE2E" class="weui-btn" type="primary" plain="true"><text style="color:#fff">绑定</text></button>
+</view>

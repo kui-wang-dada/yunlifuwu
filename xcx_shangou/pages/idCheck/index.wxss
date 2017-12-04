@@ -1,0 +1,88 @@
+.commonView {
+  width: 100%;
+  height: 40%;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.barCode {
+  width: 80%;
+  height: 40%;
+}
+
+.bottomView {
+  margin-top: 5%;
+}
+
+.bottom-title {
+  width: 100%;
+  height: 30%;
+}
+
+.bottom-content {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: row;
+}
+
+.bottomImage {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  margin-bottom: 20rpx;
+  background-color: #F5F5F5;
+}
+
+.content-view {
+  width: 45%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.center-view {
+  width: 10%;
+  height: 100%;
+}
+
+.barcode_new {
+    display: flex;
+    height: 320rpx;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.barnum {
+    width: 670rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 38rpx;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 10rpx;
+    white-space: nowrap;
+}
+
+.barcode_new > canvas {
+    width: 680rpx;
+    height: 200rpx;  
+}
+button[type="primary"]{
+    background-color:#1296DB;
+}
+.page__bd_spacing{
+  width: 94%;
+  margin:3%;
+}
+.showView {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.showView text{
+  color: #FF4500
+}

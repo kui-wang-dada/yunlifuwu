@@ -1,0 +1,83 @@
+.current-shop {
+  padding: 3px;
+  width: 100%;
+  background-color: #F5F5F5;
+}
+.current-shop text{
+  color:#000;
+  font-family:"黑体";
+  padding-left:12px;
+}
+
+.title-img {
+  height:100%;
+  display: flex;
+  justify-content: center;
+  padding-left: 5px;
+}
+
+.top-margin {
+  margin-top: 80px;
+}
+
+.alphabet-list {
+
+}
+.alphabet-list .section-item {
+
+}
+.alphabet-list .section-item .section-item-header {
+  display: flex;
+  align-items: center;
+  font-size: 35rpx;
+	color: #a8a8a8;
+	background-color: #F5F5F5;
+  padding: 4rpx 15px;
+  font-family: "Arial";
+}
+
+.alphabet-list .section-item .section-item-cells {
+  padding-left: 15px;
+}
+.alphabet-list .section-item .section-item-cells .section-item-cell{
+  font-size: 30rpx;
+	line-height: 1.0;
+	color: #333333;
+  padding: 29rpx 0;
+  font-family: "Arial";
+}
+.border-bottom {
+  border-bottom: 1rpx solid #dbdbdb;
+}
+.border-bottom text,.section-item-cell text{
+  font-family: "Arial";
+  font-size: 14px;
+}
+.alphanet-selector {
+  position: absolute;
+  top: 75px;
+  right: 0;
+  height: 432px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  box-sizing: border-box;
+}
+.alphanet-selector .selector-one {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+	color: #43c1f4;
+  padding: 3px 5px;
+  height: 12px;
+  font-family: "Arial";
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+

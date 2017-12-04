@@ -1,0 +1,196 @@
+<view class="page">
+
+   <!--顶部导航栏-->
+   <view class="swiper-tab">
+      <view class="tab-item {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">全部订单</view>
+      <view class="tab-item {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">待付款</view>
+      <view class="tab-item {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">待核检</view>
+   </view>
+
+   <!--内容主体-->
+   <swiper class="swiper" style="height:{{windowH}}px" current="{{currentTab}}" duration="200" bindchange="swiperChange">
+      <swiper-item>
+         <scroll-view wx:if="{{allList.length > 0}}" scroll-y style="height: {{windowH}}px">
+            <view class="itemView" wx:for="{{allList}}" wx:key="{{index}}">
+
+               <view class="itemView-title">
+                  <image src="../../images/shop.png" class="title-image margin-left"></image>
+                  <text class="margin-left">{{storeName}}</text>
+                  <view class="title-left">
+                     <text>{{item.add_date}}</text>
+                  </view>
+               </view>
+               <view class="itemView-center" bindtap="clickPayDetail" data-status="{{2}}" data-item="{{item}}" data-index="{{index}}">
+                  <!-- <view class="centerText-view"> -->
+                  <view class="product">
+                     <text>订单号: {{item.order_no}}</text>
+                  </view>
+                  <view class="product">
+                     <text>共{{item.sp_total}}件商品</text>
+                  </view>
+                  <!-- <view class="centerText-view"> -->
+                  <view class="product">
+                     <text>总计：¥{{item.yf_amt}}</text>
+                  </view>
+               </view>
+
+               <view wx:if="{{item.order_status == '0'}}" class="itemView-title del">
+                  <text class="margin-left" style="color:#FF0000">{{item.status_str}}</text>
+                  <view class="title-left">
+                     <view class="bottom-button border-style" data-index="{{1}}" data-item="{{item}}" bindtap="cancelOrder">
+                        <text>取消订单</text>
+                     </view>
+                     <view class="bottom-button liji" data-index="{{1}}" data-item="{{item}}" bindtap="confirmToPay">
+                        <text>立即付款</text>
+                     </view>
+                  </view>
+               </view>
+
+               <view wx:elif="{{item.order_status == '30'}}" class="itemView-title">
+                  <text class="margin-left" style="color:#FF0000">已取消</text>
+               </view>
+
+               <view wx:elif="{{item.order_status == '1'}}" class="itemView-title">
+                  <text class="margin-left" style="color:#FF0000">待核检</text>
+                  <view class="title-left">
+                     <!-- <view class="bottom-button border-style" data-index="{{1}}" data-item="{{item}}" bindtap="applyRefund">
+                        <text>申请退款</text>
+                     </view> -->
+                     <view class="bottom-button border-style" data-index="{{1}}" data-item="{{item}}" bindtap="checkHejian">
+                           <text>查看核检码</text>
+                     </view>
+                  </view>
+               </view>
+
+               <view wx:elif="{{item.order_status == '3'}}" class="itemView-title">
+                  <text class="margin-left" style="color:#FF0000">{{item.status_str}}</text>
+               </view>
+
+                <view wx:elif="{{item.order_status}}" class="itemView-title">
+                  <text class="margin-left" style="color:#FF0000">{{item.status_str}}</text>
+               </view> 
+
+               <!-- <view wx:else class="itemView-title">
+                  <text class="margin-left" style="color:#FF0000">已核检</text>
+               </view> -->
+            </view>
+         </scroll-view>
+       
+         <view wx:else class="none common-center">
+            <text style="color:#666666;margin-bottom:100px">您没有任何订单</text>
+         </view>
+      </swiper-item>
+
+      <swiper-item>
+         <view wx:if="{{status == 1}}" class="itemView" wx:key="{{index}}">
+            <scroll-view wx:if="{{payList.length > 0}}" scroll-y style="height: {{windowH}}px">
+               <view class="itemView" wx:for="{{payList}}" wx:key="{{index}}">
+                  <view class="itemView-title">
+                     <image src="../../images/shop.png" class="title-image margin-left"></image>
+                     <text class="margin-left">{{storeName}}</text>
+                     <view class="title-left">
+                        <text>{{item.add_date}}</text>
+                     </view>
+                  </view>
+                  <view class="itemView-center" bindtap="clickPayDetail" data-status="{{1}}" data-item="{{payList}}" data-index="{{index}}">
+                     <view class="product">
+                        <text>订单号: {{item.order_no}}</text>
+                     </view>
+                     <view class="product">
+                        <text>共{{item.sp_total}}件商品</text>
+                     </view>
+                     <view class="product">
+                        <text>总计：¥{{item.yf_amt}}</text>
+                     </view>
+                  </view>
+
+                  <view class="itemView-title del">
+                     <text class="margin-left" style="color:#FF0000">{{item.status_str}}</text>
+                     <view class="title-left">
+                        <view class="bottom-button border-style" data-index="{{2}}" data-item="{{payList}}" bindtap="cancelOrder">
+                           <text>取消订单</text>
+                        </view>
+                        <view class="bottom-button liji" data-index="{{2}}" data-item="{{payList}}" bindtap="confirmToPay">
+                           <text>立即付款</text>
+                        </view>
+                     </view>
+                  </view>
+               </view>
+            </scroll-view>
+         </view>
+         <view wx:else class="none common-center">
+            <text style="color:#666666;margin-bottom:100px">您没有任何订单</text>
+         </view>
+      </swiper-item>
+
+      <swiper-item>
+         <view wx:if="{{status == 2}}" class="itemView" wx:key="{{index}}">
+            <scroll-view wx:if="{{hejianList.length > 0}}" scroll-y style="height: {{windowH}}px">
+               <view class="itemView" wx:for="{{hejianList}}" wx:key="{{index}}">
+                  <view class="itemView-title">
+                     <image src="../../images/shop.png" class="title-image margin-left"></image>
+                     <text class="margin-left">{{storeName}}</text>
+                     <view class="title-left">
+                        <text>{{item.add_date}}</text>
+                     </view>
+                  </view>
+                  <view class="itemView-center" bindtap="clickPayDetail" data-status="{{3}}" data-item="{{hejianList}}" data-index="{{index}}">
+                     <view class="product">
+                        <text>订单号: {{item.order_no}}</text>
+                     </view>
+                     <view class="product">
+                        <text>共{{item.sp_total}}件商品</text>
+                     </view>
+                     <view class="product">
+                        <text>总计：¥{{item.yf_amt}}</text>
+                     </view>
+                  </view>
+
+                  <view class="itemView-title">
+                     <text class="margin-left" style="color:#FF0000">{{item.status_str}}</text>
+                     <view class="title-left">
+                        <!-- <view class="bottom-button border-style" data-index="{{2}}" data-item="{{hejianList}}" bindtap="applyRefund">
+                           <text>申请退款</text>
+                        </view> -->
+                        <view class="bottom-button border-style" data-index="{{1}}" data-item="{{item}}" bindtap="checkHejian">
+                           <text>查看核检码</text>
+                     </view>
+                     </view>
+                  </view>
+
+               </view>
+
+            </scroll-view>
+         </view>
+         <!-- <view wx:elif="{{status == 8}}" class="itemView" wx:key="{{index}}">
+        
+        <view class="itemView-title">
+          <image src="../../images/shop.png" class="title-image margin-left"></image>
+          <text class="margin-left">{{storeName}}</text>
+          <view class="title-left">
+            <text>{{hejianList.brief.tradeDate}}</text>
+          </view>
+        </view>
+        <view class="itemView-center"  bindtap="clickPayDetail" data-status="{{8}}" data-item="{{hejianList}}" data-index="{{index}}">
+          <view class="product">
+            <text>订单号: {{hejianList.brief.orderId}}</text>
+          </view>
+          <view class="product">
+            <text>共{{hejianList.brief.quantity}}件商品</text>
+          </view>
+          <view class="product">
+            <text>总计：¥{{hejianList.brief.receivable}}</text>
+          </view>
+        </view>
+
+        <view class="itemView-title">
+          <text class="margin-left" style="color:#FF0000">核检中</text> 
+        </view>
+      </view> -->
+
+         <view wx:else class="none common-center">
+            <text style="color:#666666;margin-bottom:100px">您没有任何订单</text>
+         </view>
+      </swiper-item>
+   </swiper>
+</view>

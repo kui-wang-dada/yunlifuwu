@@ -1,0 +1,38 @@
+<view class="">
+  <view class="current-shop">
+    <text>当前门店</text>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view wx:if="{{flag}}" class="weui-cell__bd" bindtap="chooseShop" data-item="{{titleStatus}}" style="color:#FF4500">{{titleStatus}}</view>
+       <view wx:else class="weui-cell__bd" style="color:#FF4500">{{titleStatus}}</view> 
+      <view class="weui-cell__ft" style="color:#707070" bindtap="getLocation">重新定位</view>
+      <view class="title-img">
+        <image src="{{icon}}" style="vertical-align: middle;width:22px; height: 22px;"></image>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y style="height: {{windowHeight}};" scroll-into-view="{{alpha}}">
+  <view class="alphabet">
+    <view class="alphabet-list">
+      <view wx:for="{{list}}" wx:key="unique" id="{{item.alphabet}}" class="section-item">
+        <view class="section-item-header">
+          {{item.alphabet}}
+        </view>
+        <view bindtap="chooseShop" data-item="{{cell}}" wx:for="{{item.datas}}" wx:key="unique" wx:for-item="cell" wx:for-index="cellIndex" class="section-item-cells">
+          <view class="section-item-cell {{cellIndex != (item.datas.length-1) ? 'border-bottom':''}}">
+            <text>{{cell}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  </scroll-view>
+  <view data-id="selector" catchtouchstart="handlerAlphaTap" catchtouchmove="handlerMove" class="alphanet-selector">
+    <view data-ap="{{item.alphabet}}" wx:for="{{list}}" wx:key="unique" class="selector-one">
+     {{item.alphabet}}
+   </view>
+  </view>
+
+</view>

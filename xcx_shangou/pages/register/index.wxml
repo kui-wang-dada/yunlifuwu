@@ -1,0 +1,56 @@
+<view class="container" xmlns:wx="">
+  <view class="kong"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label" style="width:75px">手机号</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input maxlength="11" type="number" bindinput="bindPhone" value="{{phoneValue}}" class="weui-input" placeholder="请输入手机号"/>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell__hd">
+        <view class="weui-label" style="width:75px">验证码</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input maxlength="6" type="number" bindinput="bindCode" value="{{codeValue}}" class="weui-input" placeholder="请输入验证码" />
+      </view>
+      <view class="weui-cell__ft">
+        <view style="width:80px;display:flex;justify-content:center;" wx:if="{{codeBtn == 2}}" bindtap="getCode" class="weui-vcode-btn">
+          <text style="color:#1296db">获取验证码</text>
+        </view>
+        <view style="width:80px;display:flex;justify-content:center;" wx:elif="{{codeBtn == 3}}" class="weui-vcode-btn">
+          <text style="color:#FF4500">{{second}}s</text>
+        </view>
+        <view style="width:80px;display:flex;justify-content:center;" wx:else class="weui-vcode-btn">
+          <text style="color:#C0C0C0">获取验证码</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="center-view">
+    <checkbox-group bindchange="bindAgreeChange">
+    <label class="weui-agree" for="weuiAgree">
+      <view class="weui-agree__text">
+        <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}" />
+          <view class="weui-agree__checkbox-icon">
+            <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
+          </view>
+        阅读并同意<navigator url="" class="weui-agree__link">
+          <text style="color:#1296db">《相关条款》</text>
+        </navigator>
+      </view>
+    </label>
+  </checkbox-group>
+  </view>
+  
+  <view wx:if="{{confirmBtn}}" class="page__bd page__bd_spacing confirm-btn">
+    <button bindtap="loginBtn" class="weui-btn" type="primary" style="background-color:#ffa825">登录</button>
+  </view>
+  <view wx:else class="page__bd page__bd_spacing confirm-btn">
+    <button disabled="true" class="weui-btn" type="primary" style="background-color:#C0C0C0">登录</button>
+  </view>
+  
+</view>

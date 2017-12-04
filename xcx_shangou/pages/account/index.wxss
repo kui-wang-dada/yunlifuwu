@@ -1,0 +1,190 @@
+.margin-left {
+  margin-left: 10px;
+  font-size:14px;
+  color:#888;
+}
+
+.top-view {
+  height: 10px;
+  width: 100%;
+}
+
+.account-title {
+  flex-direction: row;
+  background-color: #FFFFFF;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.title-image {
+  height:18px;
+  width:18px
+}
+
+.title-left {
+  position: absolute;
+  right: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  line-height:40px;
+}
+
+.title-left text{
+  font-size:14px;
+  color:#333;
+}
+.count{
+  width:15%;
+  color:#8a8a8a;
+  text-align:center;
+  border:1px solid #ddd;
+  height:20px;
+  line-height:20px;
+  border-radius:50px;
+  margin-top:4px;
+  margin-left: 2%;
+}
+.goods{
+  width:50%;
+  text-align:left;
+}
+.totle{
+  width:32%;
+  color:#FF4500;
+  text-align:right;
+}
+.list text{
+  font-family: "黑体";
+  font-size:14px;
+  display: block;
+  float:left;
+}
+.center {
+  width: 90%;
+  margin:5% 5% 18% 5%;
+  background-color:#fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.item-view {
+  width: 90%;
+  height: 30px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2px dotted #dedede;
+  margin:0px 5%;
+  padding:10px 0;
+  line-height:30px;
+}
+
+.list{
+  width: 100%;
+  height: 100%;
+}
+
+.bottomView {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 9%;
+  z-index: 9000;
+  background-color: #FFFFFF;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice-view {
+  margin-left: 100px;
+  flex-direction: row;
+  
+}
+
+.submit-view {
+  height: 100%;
+  width: 25%;
+  position: absolute;
+  right: 0;
+  background-color: #1296db;
+}
+
+.end-view {
+  width: 100%;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+
+
+.weui-media-box_appmsg {
+	border-bottom: 1px dotted #d9d9d9;
+}
+
+.weui-media-box::before{
+	border-top: 0px;
+}
+
+.weui-media-box__title text{
+	font-size:30px;
+}
+.weui-media-box {
+	padding:4px 0 2% 0;
+	margin:0 4% 0 4%;
+}
+.weui-media-box__desc {
+	color:#666666;
+	font-size:14px;
+}
+.choose-card {
+  width: 100%;
+  height: 22px;
+  background-color: #FFFFFF;
+}
+.submit-view text{
+  color:#fff;
+}
+.weui-cells_after-title{
+  margin:5px 0
+}
+.weui-cell {
+  padding:5px 10px;
+}
+.clothes{
+    width:50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.discount-view{
+  width: 100%;
+  background-color: #FFFFFF;
+}
+.discount-view text{
+  font-family: "黑体";
+  font-size:14px;
+}
+.discount-content{
+  width:100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.discount-left{
+  width:50%;
+  text-align:left;
+  margin-left: 5%;
+}
+.discount-right{
+  width:50%;
+  color:#FF4500;
+  text-align:right;
+  margin-right: 5%;
+}

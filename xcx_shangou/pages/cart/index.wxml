@@ -1,0 +1,242 @@
+<view class="container" xmlns:wx="http://java.sun.com/JSP/Page">
+   <view class="hu-top">
+      <view class="hu-view" bindtap="chooseShop">
+         <image src="../../images/xia.png" class="hu"></image>
+      </view>
+   </view>
+   <!-- <view class="topView">
+    <view class="topView-item {{index == currentBag? 'bag-sel':'bag-com'}}" wx:for="{{bagInfo}}" bindtap="chooseBag" wx:key="{{index}}" data-index="{{index}}" data-item="{{item}}">
+      <text class="common-text">{{item.goods.name}}</text>
+      <text class="money common-text">￥{{item.goods.lsj}}</text>
+    </view>
+  </view> -->
+   
+   <scroll-view wx:if="{{listInfo.length}}" class="listView">
+   <view style='padding:10px;'>
+      已选择商品列表
+      <view class="check-box common-center" bindtap="click" style='display:inline-block;margin-left:32%;width:10%;line-height:10%;'>
+               <icon class="weui-icon-checkbox_circle" type="circle" size="20" wx:if="{{checked == 1}}"></icon>
+               <icon class="weui-icon-checkbox_success" type="success" size="20" color="#ffa825" wx:if="{{checked == 2}}"></icon>
+      </view>
+      <text>开小票</text>
+   </view>
+      <view style="height:{{itemH}}px" class="list-item {{item.goods.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" wx:for="{{listInfo}}" wx:key="" bindtouchstart="touchstart" bindtouchmove="touchmove">
+         <view class="content">
+            <view class="check-box common-center" bindtap="checkBox" data-index="{{index}}">
+               <icon class="weui-icon-checkbox_circle" type="circle" size="20" wx:if="{{!item.goods.checked}}"></icon>
+               <icon class="weui-icon-checkbox_success" type="success" size="20" color="#ffa825" wx:if="{{item.goods.checked}}"></icon>
+            </view>
+            <view class="item-content">
+               <view class="content-left">
+                  <text style="font-size:33rpx" class="name_text">{{item.name}}</text>
+                  <view class="price_text">
+                     <text style="font-size:33rpx" class="{{item.goods.newPrice? 'hua_xian':''}}">￥{{item.oldprice}}</text>
+                     <text wx:if="{{item.goods.newPrice}}" style="font-size:33rpx;margin-left:5px">￥{{item.price}}</text>
+                  </view>
+               </view>
+               <view class="content-right">
+                  <view class="centerView-price">
+                     <block wx:if="{{item.goods.isdzc == 'N'}}">
+
+                        <view bindtap="goodsNum" data-status="0" data-index="{{index}}" data-num="{{item.quantity}}" class="chooseItem">
+                           <image class="btnView" src="../../images/minus.png"></image>
+                        </view>
+                        <view class="num-center">
+                           <input type="number" data-index="{{index}}" class="num-input" maxlength="3" bindblur="numInput" value="{{item.quantity}}" />
+                        </view>
+                        <view bindtap="goodsNum" data-status="1" data-index="{{index}}" data-num="{{item.quantity}}" class="chooseItem">
+                           <image class="btnView" src="../../images/add.png"></image>
+                        </view>
+
+                     </block>
+                     <block wx:else>
+                        <text>{{item.quantity}}</text>
+                     </block>
+                  </view>
+                  <text class="money">￥{{item.receivable}}</text>
+               </view>
+            </view>
+         </view>
+         <view class="del" catchtap="del" data-index="{{index}}" data-item="{{item.goods}}">删除</view>
+      </view>
+   </scroll-view>
+
+   <view class="blankView common-center" wx:else>
+      <view class="title-view">
+         <!--<text>{{appName}}单次可支持购买<text style="color:#FF4500;">{{maxNum}}</text>种及以内商品</text>-->
+          <text>自购每笔最多购买<text style="color:#FF4500;">{{maxNum}}</text>种商品</text>
+         <!--<text>(同一种商品,件数不限)</text>-->
+      </view>
+      <view class="content-view common-center">
+         <view class="blank-itemView common-center">
+            <view bindtap="toScan" class="blank-itemView-image common-center">
+               <image src="../../images/exit.png" style="height:60rpx;width:60rpx"></image>
+            </view>
+            <text style="font-size: 12px">扫一扫</text>
+            <text style="font-size: 12px">商品条形码</text>
+         </view>
+         <view class="blank-centerView common-center">
+            <image src="../../images/right.png" style="height:45rpx;width:45rpx"></image>
+         </view>
+         <view class="blank-itemView common-center">
+            <view class="blank-itemView-image common-center">
+               <image src="../../images/pay.png" style="height:60rpx;width:60rpx"></image>
+            </view>
+            <text style="font-size: 12px">在线支付</text>
+            <text style="font-size: 12px">获得条形码</text>
+         </view>
+         <view class="blank-centerView common-center">
+            <image src="../../images/right.png" style="height:45rpx;width:45rpx"></image>
+         </view>
+         <view class="blank-itemView common-center">
+            <view class="blank-itemView-image common-center">
+               <image src="../../images/check_q.png" style="height:60rpx;width:60rpx"></image>
+            </view>
+            <text style="font-size: 12px">自购专属通道</text>
+            <text style="font-size: 12px;">凭条码出超市</text>
+         </view>
+      </view>
+   </view>
+   <view class="kong"></view>
+   <view class="bottomView">
+      <view class="check-box common-center" bindtap="chooseAllGoods" data-index="{{index}}">
+         <icon class="weui-icon-checkbox_circle" type="circle" size="20" wx:if="{{!allChooseBtn}}"></icon>
+         <icon class="weui-icon-checkbox_success" type="success" size="20" color="#ffa825" wx:if="{{allChooseBtn}}"></icon>
+      </view>
+      <text style="font-size: 16px;">全选</text>
+      <view class="totalPrice-view common-center">
+         <text style="font-size: 16px;margin-right:10px">合计:</text>
+         <text style="color:	#FF4500">￥{{totalPrice}}</text>
+      </view>
+      <view class="submit-view common-center" bindtap="clickToAccount">
+         <text>结算({{goodsNum}})</text>
+      </view>
+   </view>
+   <!-- 购物袋弹出框 -->
+   <!--mask-->
+   <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+   <!--content-->
+   <!--使用animation属性指定需要执行的动画-->
+   <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+      <!--drawer content-->
+      <view class="drawer_title">{{bagInfo.length}}种购物袋供选择</view>
+      <view wx:if = "{{bagInfo.length == 1}}">
+         <view class="drawer_content">
+               <view class="baginfoone"  bindtap="choosesmall" >
+                  <view class="moneyone">{{bagInfo[0].name}}</view>
+                  <image src='{{img[0]}}' style='width:30%;height:50%;position:relative;top:22px;left:36%;'></image>
+                  <view class="moneyone" style=' bottom: -27px'>￥{{bagInfo[0].oldprice}}</view>
+               </view>
+         </view>
+         <!-- 小购物袋数量选择 -->
+         <view wx:if="{{boxshow == 1}}">
+            <view bindtap="bagsNumsmall" data-status="0" data-index="{{index}}" data-num="{{bagnumsmall}}" style='float:left;width:30%;'>
+               <image class="btnView" src="../../images/minus.png" style="margin-left:96%"></image>
+            </view>
+            <view style='float:left;width:30%;text-align:center;margin-left:5%;'>
+               {{bagnumsmall}}
+            </view>
+            <view bindtap="bagsNumsmall" data-status="1" data-index="{{index}}" data-num="{{bagnumsmall}}" style='float:left;width:30%'>
+               <image class="btnView" src="../../images/add.png"></image>
+            </view>
+         </view>
+      </view>
+      <view wx:if = "{{bagInfo.length == 2}}">
+         <view class="drawer_content">
+               <view class="baginfo"  bindtap="choosesmall" >
+                  <view class="moneyone">{{bagInfo[0].name}}</view>
+                  <image src='{{img[0]}}' style='width:40%;height:40%;position:relative;top:22px;left:30%;'></image>
+                  <view class="moneyone" style=' bottom: -27px'>￥{{bagInfo[0].oldprice}}</view>
+               </view>
+               <view class="baginfo"  bindtap="choosemid">
+                  <view class="moneyone">{{bagInfo[1].name}}</view>
+                  <image src='{{img[1]}}' style='width:50%;height:50%;position:relative;top:10px;left:25%;'></image>
+                  <view class="moneyone" style='bottom: -9px'>￥{{bagInfo[1].oldprice}}</view>
+               </view>
+         </view>
+         <!-- 小购物袋数量选择 -->
+         <view wx:if="{{boxshow == 1}}">
+            <view bindtap="bagsNumsmall" data-status="0" data-index="{{index}}" data-num="{{bagnumsmall}}" style='float:left;width:30%;'>
+               <image class="btnView" src="../../images/minus.png" style="margin-left:96%"></image>
+            </view>
+            <view style='float:left;width:30%;text-align:center;margin-left:5%;'>
+               {{bagnumsmall}}
+            </view>
+            <view bindtap="bagsNumsmall" data-status="1" data-index="{{index}}" data-num="{{bagnumsmall}}" style='float:left;width:30%'>
+               <image class="btnView" src="../../images/add.png"></image>
+            </view>
+         </view>
+         <!-- 中购物袋数量选择 -->
+         <view wx:else="{{boxshow == 2}}">
+            <view bindtap="bagsNummid" data-status="0" data-index="{{index}}" data-num="{{bagnummid}}" style='float:left;width:30%;'>
+               <image class="btnView" src="../../images/minus.png" style="margin-left:96%"></image>
+            </view>
+            <view style='float:left;width:30%;text-align:center;margin-left:5%;'>
+               {{bagnummid}}
+            </view>
+            <view bindtap="bagsNummid" data-status="1" data-index="{{index}}" data-num="{{bagnummid}}" style='float:left;width:30%'>
+               <image class="btnView" src="../../images/add.png"></image>
+            </view>
+         </view>
+      </view>
+      <view wx:if = "{{bagInfo.length == 3}}">
+         <view class="drawer_contenttwo">
+            <scroll-view scroll-x="true" style='height:172px;width:150%;' scroll-left="{{left}}">
+               <view class="baginfotwo"  bindtap="choosesmall" >
+                  <view class="moneyonetwo">{{bagInfo[0].name}}</view>
+                  <image src='{{img[0]}}' style='width:40%;height:40%;position:relative;top:22px;left:30%;'></image>
+                  <view class="moneyonetwo" style=' bottom: -27px'>￥{{bagInfo[0].oldprice}}</view>
+               </view>
+               <view class="baginfotwo"  bindtap="choosemid">
+                  <view class="moneyonetwo">{{bagInfo[1].name}}</view>
+                  <image src='{{img[1]}}' style='width:45%;height:45%;position:relative;top:17px;left:29%;'></image>
+                  <view class="moneyonetwo" style='bottom: -20px'>￥{{bagInfo[1].oldprice}}</view>
+               </view>
+               <view class="baginfotwo"  bindtap="choosebig">
+                  <view class="moneyonetwo">{{bagInfo[2].name}}</view>
+                  <image src='{{img[2]}}' style='width:50%;height:50%;position:relative;top:10px;left:25%;'></image>
+                  <view class="moneyonetwo" style='bottom: -12px'>￥{{bagInfo[2].oldprice}}</view>
+               </view>
+            </scroll-view>
+         </view>
+         <!-- 小购物袋数量选择 -->
+         <view wx:if="{{boxshow == 1}}">
+            <view bindtap="bagsNumsmall" data-status="0" data-index="{{index}}" data-num="{{bagnumsmall}}" style='float:left;width:30%;'>
+               <image class="btnView" src="../../images/minus.png" style="margin-left:96%"></image>
+            </view>
+            <view style='float:left;width:30%;text-align:center;margin-left:5%;'>
+               {{bagnumsmall}}
+            </view>
+            <view bindtap="bagsNumsmall" data-status="1" data-index="{{index}}" data-num="{{bagnumsmall}}" style='float:left;width:30%'>
+               <image class="btnView" src="../../images/add.png"></image>
+            </view>
+         </view>
+         <!-- 中购物袋数量选择 -->
+         <view wx:elif="{{boxshow == 2}}">
+            <view bindtap="bagsNummid" data-status="0" data-index="{{index}}" data-num="{{bagnummid}}" style='float:left;width:30%;'>
+               <image class="btnView" src="../../images/minus.png" style="margin-left:96%"></image>
+            </view>
+            <view style='float:left;width:30%;text-align:center;margin-left:5%;'>
+               {{bagnummid}}
+            </view>
+            <view bindtap="bagsNummid" data-status="1" data-index="{{index}}" data-num="{{bagnummid}}" style='float:left;width:30%'>
+               <image class="btnView" src="../../images/add.png"></image>
+            </view>
+         </view>
+         <!-- 大购物袋数量选择 -->
+         <view wx:else="{{boxshow == 3}}">
+            <view bindtap="bagsNumbig" data-status="0" data-index="{{index}}" data-num="{{bagnumbig}}" style='float:left;width:30%;'>
+               <image class="btnView" src="../../images/minus.png" style="margin-left:96%"></image>
+            </view>
+            <view style='float:left;width:30%;text-align:center;margin-left:5%;'>
+               {{bagnumbig}}
+            </view>
+            <view bindtap="bagsNumbig" data-status="1" data-index="{{index}}" data-num="{{bagnumbig}}" style='float:left;width:30%'>
+               <image class="btnView" src="../../images/add.png"></image>
+            </view>
+         </view>
+      </view>
+      <view class="btn_ok" bindtap="powerno" >不需要</view>
+      <view class="btn_ok" bindtap="powerneed" style='background-color:#FFa825;color:#fff;'>确定</view>
+   </view>
+   </view>

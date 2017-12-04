@@ -1,0 +1,130 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd black">订单状态:</view>
+                <view class="weui-cell__ft pay">{{titleStatus}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="container">
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">商品</view>
+                <view class="weui-cell__ft single">单价</view>
+                <view class="weui-cell__ft single">数量</view>
+                <view class="weui-cell__ft single">金额</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian"  wx:for="{{listInfo}}" wx:key="">
+            <view class="weui-cell">
+               <view class="weui-cell__bd clothes">{{item.name}}</view>
+                <view class="weui-cell__ft single">￥{{item.oldprice}}</view>
+                <view class="weui-cell__ft single"><text class="cou">x{{item.sl}}</text></view>
+                <view wx:if="{{item.allowance>0}}" class="weui-cell__ft single"><text style="color:#F84E4C">￥{{item.old_amt}}</text></view>
+                <view wx:else="{{item.allowance>0}}" class="weui-cell__ft single">￥{{item.old_amt}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">总数量</view>
+                <view class="weui-cell__ft">{{goodsNum}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">折前总金额</view>
+                <view class="weui-cell__ft">￥{{amount}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">总折扣</view>
+                <view class="weui-cell__ft">￥{{discount}}</view>
+            </view>
+        </view>
+       
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">应付金额</view>
+                <view class="weui-cell__ft">￥{{receivable}}</view>
+            </view>
+        </view>
+        
+        <!-- <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">支付金额</view>
+                <view class="weui-cell__ft">￥0.00</view>
+            </view>
+        </view> -->
+        
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">交易时间</view>
+                <view class="weui-cell__ft">{{createDate}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+            <!-- <image class="middle_png" src="../../images/heng.png"></image> -->
+        </view>
+          <view class="weui-cells weui-cells_after-title xian">
+            <!-- <view class="weui-cell">
+                <view class="weui-cell__bd">会员卡号</view>
+                <view class="weui-cell__ft">{{cardno}}</view>
+            </view> -->
+        </view>  
+        <!-- <view class="weui-cells weui-cells_after-title">
+            <image class="middle_png middle_png2" src="../../images/middle_png2.png"></image>
+        </view>
+         <view class="weui-cells weui-cells_after-title">
+            <view class="p">电子小票是您退换货的唯一凭证;请您在一个月之内开具发票</view>
+        </view> -->
+        <view class="weui-cells weui-cells_after-title">
+            <!-- <image class="middle_png" src="../../images/heng.png"></image> -->
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">交易形态</view>
+                <view class="weui-cell__ft">超市</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">交易门店</view>
+                <view class="weui-cell__ft">{{storeName}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">交易编号</view>
+                <view class="weui-cell__ft">{{orderId}}</view>
+            </view>
+        </view>
+        <view wx:if="{{trade_no}}" class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">微信支付交易号</view>
+                <view class="weui-cell__ft">{{trade_no}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title xian">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">创建日期</view>
+                <view class="weui-cell__ft">{{createDate}}</view>
+            </view>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+            <image class="middle_png end" src="../../images/end.png"></image>
+        </view>
+    </view>
+    <view class="kong"></view>
+    <view wx:if="{{status == 0}}" class="page__bd page__bd_spacing" style="background-color: #F8F8F8">
+        <button class="weui-btn" type="primary" bindtap="confirm">立即付款</button>
+        <button class="weui-btn" type="default" bindtap="cancelOrder" style="background-color: #FFFFFF">取消订单</button>
+    </view>
+     <view wx:elif="{{status == 2}}" bindtap="deleteOrder" class="page__bd page__bd_spacing" style="background-color: #F8F8F8">
+      <button class="weui-btn" type="default" style="background-color: #FFFFFF">删除订单</button>
+    </view>  
+    <view wx:elif="{{status == 1}}" class="page__bd page__bd_spacing" style="background-color: #F8F8F8">
+      <button class="weui-btn" type="default" bindtap="applyRefund" style="background-color: #FFFFFF">申请退款</button>
+    </view>    
+</view>

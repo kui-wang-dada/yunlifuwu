@@ -1,0 +1,123 @@
+/* pages/inspection/index.wxss */
+/* pages/transaction/index.wxss */
+@import "../../app.wxss";
+page{
+    background-color: #f6f6f6;
+    font-size: 16px;
+    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.weui-media-box::before{
+	border-top: 0px;
+}
+.weui-panel::before{
+	border-top: 0px;
+}
+.weui-panel::after{
+ 	border-bottom: 0px;
+}
+.container{
+  text-align: center;
+  width:100%;
+  height: 100%;
+}
+.title image{
+  padding:10% 0 5% 0;
+	width:30px;
+  height: 30px;
+}
+
+ #dotted::before{
+	content: '';
+  position: absolute;
+  top: 40%;
+  right:-2px;
+  width: 5px;
+  height: 10px;
+  border-radius:0 5px 5px 0;
+  border: 1px solid #f6f6f6;
+  background-color:#f6f6f6;
+  box-shadow: 1px 0 0 rgba(250,250,250,.8); 
+} 
+#dotted::after{
+    content: '';
+    position: absolute;
+    top: 40%;
+    width: 5px;
+    height: 10px;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #f6f6f6;
+    background: #f6f6f6;
+    box-shadow: inset 1px 0 0 rgba(250,250,250,.8);
+    left:98.2%;
+}
+.message{
+  width: 84%;
+  padding: 8% 8% 5% 8%;
+  font-size: 12px;
+  border-bottom: 1px dotted #d9d9d9;
+}
+.color_r{
+  color: #F84D4B;
+}
+.tiao image{
+  padding-top: 10%;
+  width: 80%;
+  height: 105px;
+}
+.color_b{
+  color:#666666;
+  border: 0px;
+}
+.card{
+  letter-spacing: 10px;
+  border:0px;
+  padding-bottom:0%;
+}
+.weight_b{
+  color:#000;
+}
+.page__bd_spacing{
+  width: 94%;
+  margin:3%;
+}
+button[type="default"] {
+  background-color:#fff;
+}
+
+.barcode_new {
+    display: flex;
+    height: 550rpx;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.barnum {
+    width: 670rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 38rpx;
+    color:#989898;
+    /* font-weight: bold; */
+    text-align: center;
+    /* letter-spacing: 10rpx; */
+    white-space: nowrap; 
+}
+
+.barcode_new > canvas {
+    width: 680rpx;
+    height: 600rpx;
+}
+button[type="primary"]{
+    background-color:#ffa825;
+}
+.showView {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.showView text{
+  color: #FF4500;
+  font-size: 15px;
+}

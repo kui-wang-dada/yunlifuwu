@@ -1,0 +1,45 @@
+<view wx:if="{{true}}" class="container">
+  <view class="commonView">
+    <text>身 份 核 检 码</text>
+    <view class="barcode_new">
+      <view class="barnum">{{code}}</view>
+      <canvas canvas-id="barcode" />
+    </view>
+    <text style="font-size: 13px">温馨提示: 该条码用于购物后核检出示请前往<text style="color:#FF4500;">专属通道</text></text>
+  </view>
+
+  <view class="commonView bottomView">
+    <view class="bottom-title common-center">
+      <text>使用方式</text>
+    </view>
+    <view class="bottom-content">
+      <view class="content-view common-center">
+        <view class="bottomImage common-center">
+          <image src="../../images/check.png" style="height:60rpx;width:60rpx"></image>
+        </view>
+        <text style="font-size: 13px">自助扫描商品后</text>
+        <text style="font-size: 13px">前往快速通道</text>
+      </view>
+      <view class="center-view common-center">
+        <image src="../../images/right.png" style="height:45rpx;width:45rpx"></image>
+      </view>
+      <view class="content-view common-center">
+        <view class="bottomImage common-center">
+          <image src="../../images/code.png" style="height:60rpx;width:60rpx"></image>
+        </view>
+        <text style="font-size: 13px">核检时出示</text>
+        <text style="font-size: 13px">身份核检码</text>
+      </view>
+    </view>
+  </view>
+  <view class="showView"><text>提示: 核检时请确保核检员在您身边</text></view>
+  <view class="page__bd page__bd_spacing">
+    <button style="" class="weui-btn" bindtap="hejian" type="primary">核检</button> 
+  </view>
+</view>
+
+<view wx:else class="container common-center">
+  <view class="none common-center">
+    <text style="color:#666666;margin-bottom:100px">您没有待核检商品</text>
+  </view>
+</view>
